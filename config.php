@@ -11,7 +11,7 @@ $CFG->dbname    = 'e_learning_smanda_metro';
 $CFG->dbuser    = 'root';
 $CFG->dbpass    = '';
 $CFG->prefix    = 'mdl_';
-$CFG->dboptions = array (
+$CFG->dboptions = array(
   'dbpersist' => 0,
   'dbport' => 3306,
   'dbsocket' => '',
@@ -19,7 +19,7 @@ $CFG->dboptions = array (
 );
 
 $CFG->wwwroot   = 'http://localhost/e_learning_smanda_metro';
-$CFG->dataroot  = 'D:\\xampp\\moodledata';
+$CFG->dataroot  = 'C:\\xampp\\dataelearning';
 $CFG->admin     = 'admin';
 
 $CFG->directorypermissions = 0777;
