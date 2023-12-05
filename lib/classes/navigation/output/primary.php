@@ -105,7 +105,7 @@ class primary implements renderable, templatable
     {
         global $CFG, $COURSE;
 
-        //$CFG->custommenuitems = "Kategori Kelas | /course/";
+        $CFG->custommenuitems = "Kategori Kelas | /course/";
 
         // $coursecontext = \context_course::instance($COURSE->id);
         // if(isloggedin()){
