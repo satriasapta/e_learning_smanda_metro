@@ -105,15 +105,16 @@ class primary implements renderable, templatable
     {
         global $CFG, $COURSE;
 
-        $CFG->custommenuitems = "Kategori Kelas | /course/";
+        //$CFG->custommenuitems = "Kategori Kelas | /course/";
 
         // $coursecontext = \context_course::instance($COURSE->id);
         // if(isloggedin()){
-        //     if(has_capability('moodle/course:create', $coursecontext)){
+
+        //     if(has_capability('moodle/role:manage', $coursecontext)){
         //         $CFG->custommenuitems = "Kategori Kelas | /course/index.php";
         //     }
         // }
-        
+
         $custommenuitems = $CFG->custommenuitems;
         $currentlang = current_language();
         $custommenunodes = custom_menu::convert_text_to_menu_nodes($custommenuitems, $currentlang);
