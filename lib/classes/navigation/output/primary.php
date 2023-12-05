@@ -32,7 +32,8 @@ use custom_menu;
  * @copyright   2021 onwards Peter Dias
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class primary implements renderable, templatable {
+class primary implements renderable, templatable
+{
     /** @var moodle_page $page the moodle page that the navigation belongs to */
     private $page = null;
 
@@ -40,7 +41,8 @@ class primary implements renderable, templatable {
      * primary constructor.
      * @param \moodle_page $page
      */
-    public function __construct($page) {
+    public function __construct($page)
+    {
         $this->page = $page;
     }
 
@@ -50,7 +52,8 @@ class primary implements renderable, templatable {
      * @param renderer_base|null $output
      * @return array
      */
-    public function export_for_template(?renderer_base $output = null): array {
+    public function export_for_template(?renderer_base $output = null): array
+    {
         if (!$output) {
             $output = $this->page->get_renderer('core');
         }
@@ -74,7 +77,8 @@ class primary implements renderable, templatable {
      *
      * @return array
      */
-    protected function get_primary_nav(): array {
+    protected function get_primary_nav(): array
+    {
         $nodes = [];
         foreach ($this->page->primarynav->children as $node) {
             $nodes[] = [
@@ -97,14 +101,12 @@ class primary implements renderable, templatable {
      * @param renderer_base $output
      * @return array
      */
-    protected function get_custom_menu(renderer_base $output): array {
+    protected function get_custom_menu(renderer_base $output): array
+    {
         global $CFG;
 
-        // Early return if a custom menu does not exists.
-        if (empty($CFG->custommenuitems)) {
-            return [];
-        }
 
+        $CFG->custommenuitems = "Daftar Kelas | /course/";
         $custommenuitems = $CFG->custommenuitems;
         $currentlang = current_language();
         $custommenunodes = custom_menu::convert_text_to_menu_nodes($custommenuitems, $currentlang);
@@ -124,7 +126,8 @@ class primary implements renderable, templatable {
      * @param renderer_base $output
      * @return array
      */
-    public function get_user_menu(renderer_base $output): array {
+    public function get_user_menu(renderer_base $output): array
+    {
         global $CFG, $USER, $PAGE;
         require_once($CFG->dirroot . '/user/lib.php');
 
@@ -182,7 +185,7 @@ class primary implements renderable, templatable {
             }
         }
 
-        $modifiedarray = array_map(function($value) {
+        $modifiedarray = array_map(function ($value) {
             $value->divider = $value->itemtype == 'divider';
             $value->link = $value->itemtype == 'link';
             if (isset($value->pix) && !empty($value->pix)) {
