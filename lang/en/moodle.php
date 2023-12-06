@@ -916,7 +916,7 @@ $string['forcepasswordresetfailurenotice'] = 'Your current password no longer pa
 $string['forcepasswordresetnotice'] = 'Your current password no longer passes the set password policy, you must reset your password to login.
    {$a}';
 $string['forcetheme'] = 'Force theme';
-$string['forgotaccount'] = 'Lost password?';
+$string['forgotaccount'] = 'Forgot password?';
 $string['forgotten'] = 'Forgotten your username or password?';
 $string['forgottenduplicate'] = 'The email address is shared by several accounts, please enter username instead';
 $string['forgotteninvalidurl'] = 'Invalid password reset URL';
@@ -1398,7 +1398,7 @@ $string['movetoanotherfolder'] = 'Move to another folder';
 $string['moveup'] = 'Move up';
 $string['mustconfirm'] = 'You need to confirm your account';
 $string['mustchangepassword'] = 'The new password must be different than the current one';
-$string['mycourses'] = 'My courses';
+$string['mycourses'] = 'My Class';
 $string['myfiles'] = 'My private files';
 $string['myfilesmanage'] = 'Manage my private files';
 $string['myhome'] = 'Dashboard';
