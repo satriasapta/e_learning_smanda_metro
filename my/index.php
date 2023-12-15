@@ -101,6 +101,8 @@ $PAGE->set_subpage($currentpage->id);
 $PAGE->set_title($pagetitle);
 $PAGE->set_heading($pagetitle);
 
+
+
 if (!isguestuser()) {   // Skip default home page for guests
     if (get_home_page() != HOMEPAGE_MY) {
         if (optional_param('setdefaulthome', false, PARAM_BOOL)) {
@@ -177,7 +179,15 @@ if (empty($CFG->forcedefaultmymoodle) && $PAGE->user_allowed_editing()) {
 }
 
 echo $OUTPUT->header();
-
+$sales = new \core\chart_series('Sales', [1000, 1170, 660, 1030]);
+$expenses = new \core\chart_series('Expenses', [400, 460, 1120, 540]);
+$labels = ['2004', '2005', '2006', '2007'];
+$chart2 = new \core\chart_pie();
+$chart2->set_title('DOUGHNUT CHART');
+$chart2->set_doughnut(true);
+$chart2->add_series($sales);
+$chart2->set_labels($labels);
+echo $OUTPUT->render($chart2);
 if (core_userfeedback::should_display_reminder()) {
     core_userfeedback::print_reminder_block();
 }
