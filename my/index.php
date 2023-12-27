@@ -179,15 +179,67 @@ if (empty($CFG->forcedefaultmymoodle) && $PAGE->user_allowed_editing()) {
 }
 
 echo $OUTPUT->header();
-$sales = new \core\chart_series('Sales', [1000, 1170, 660, 1030]);
-$expenses = new \core\chart_series('Expenses', [400, 460, 1120, 540]);
-$labels = ['2004', '2005', '2006', '2007'];
-$chart2 = new \core\chart_pie();
-$chart2->set_title('DOUGHNUT CHART');
-$chart2->set_doughnut(true);
-$chart2->add_series($sales);
-$chart2->set_labels($labels);
-echo $OUTPUT->render($chart2);
+global $USER, $DB;
+
+$userid = $USER->id;
+
+// Mengambil kursus yang diikuti pengguna.
+$sql = "SELECT c.id, c.fullname FROM {course} c
+        JOIN {enrol} e ON e.courseid = c.id
+        JOIN {user_enrolments} ue ON ue.enrolid = e.id
+        WHERE ue.userid = :userid";
+$params = ['userid' => $userid];
+$courses = $DB->get_records_sql($sql, $params);
+
+// Membuat dropdown.
+echo '<form method="post">';
+echo '<select name="courseid">';
+foreach ($courses as $course) {
+    echo '<option value="' . $course->id . '">' . $course->fullname . '</option>';
+}
+echo '</select>';
+echo '<input type="submit" value="Tampilkan Chart"/>';
+echo '</form>';
+if (!empty($_POST['courseid'])) {
+    $selected_courseid = $_POST['courseid'];
+
+    // Query untuk mengambil nilai tugas dan grade to pass.
+    $sql = "SELECT gi.itemname, gg.finalgrade, gi.gradepass, gi.itemmodule
+            FROM {grade_items} gi
+            JOIN {grade_grades} gg ON gi.id = gg.itemid
+            WHERE gi.courseid = :courseid AND gi.itemtype = 'mod' AND (gi.itemmodule = 'assign' OR gi.itemmodule = 'quiz')
+            AND gg.userid = :userid";
+    $params = ['courseid' => $selected_courseid, 'userid' => $userid];
+
+    // Menjalankan query.
+    $grades = $DB->get_records_sql($sql, $params);
+
+    // Mengolah data untuk chart...
+    $assignment_names = [];
+    $assignment_grades = [];
+    $grades_to_pass = [];
+
+    foreach ($grades as $grade) {
+        $assignment_names[] = $grade->itemname;
+        $assignment_grades[] = (float) $grade->finalgrade;
+        $grades_to_pass[] = (float) $grade->gradepass; // Menambahkan grade to pass
+    }
+
+    // Membuat chart bar.
+    $grades_series = new \core\chart_series('Assignment Grades', $assignment_grades);
+    $pass_series = new \core\chart_series('Grades to Pass', $grades_to_pass); // Series baru untuk grade to pass
+    $chart = new \core\chart_line();
+    $chart->set_smooth(true);
+    $chart->set_title('Assignment Grades Bar Chart');
+    $chart->add_series($grades_series);
+    $chart->add_series($pass_series); // Menambahkan series grade to pass ke chart
+    $chart->set_labels($assignment_names);
+
+    // Menampilkan chart.
+    echo $OUTPUT->render($chart);
+}
+
+
 if (core_userfeedback::should_display_reminder()) {
     core_userfeedback::print_reminder_block();
 }
