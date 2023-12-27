@@ -19,8 +19,10 @@ $CFG->dboptions = array(
 );
 
 $CFG->wwwroot   = 'http://localhost/e_learning_smanda_metro';
-$CFG->dataroot  = 'C:\\xampp\\dataelearning';
+$CFG->dataroot  = 'D:\\xampp\\moodledata';
 $CFG->admin     = 'admin';
+$CFG->lang = 'id';
+$CFG->langlist = 'id';
 
 $CFG->directorypermissions = 0777;
 
