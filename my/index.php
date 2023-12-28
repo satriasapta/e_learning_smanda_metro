@@ -182,6 +182,7 @@ echo $OUTPUT->header();
 global $USER, $DB;
 
 $userid = $USER->id;
+$selected_courseid = !empty($_POST['courseid']) ? $_POST['courseid'] : null;
 
 // Mengambil kursus yang diikuti pengguna.
 $sql = "SELECT c.id, c.fullname FROM {course} c
@@ -195,20 +196,21 @@ $courses = $DB->get_records_sql($sql, $params);
 echo '<form method="post">';
 echo '<select name="courseid">';
 foreach ($courses as $course) {
-    echo '<option value="' . $course->id . '">' . $course->fullname . '</option>';
+    $isSelected = ($course->id == $selected_courseid) ? 'selected' : '';
+    echo '<option value="' . $course->id . '" ' . $isSelected . '>' . $course->fullname . '</option>';
 }
 echo '</select>';
 echo '<input type="submit" value="Tampilkan Chart"/>';
 echo '</form>';
-if (!empty($_POST['courseid'])) {
-    $selected_courseid = $_POST['courseid'];
-
-    // Query untuk mengambil nilai tugas dan grade to pass.
+if ($selected_courseid) {
+    // Query untuk mengambil nilai tugas dan grade to pass, diurutkan berdasarkan itemname.
     $sql = "SELECT gi.itemname, gg.finalgrade, gi.gradepass, gi.itemmodule
-            FROM {grade_items} gi
-            JOIN {grade_grades} gg ON gi.id = gg.itemid
-            WHERE gi.courseid = :courseid AND gi.itemtype = 'mod' AND (gi.itemmodule = 'assign' OR gi.itemmodule = 'quiz')
-            AND gg.userid = :userid";
+        FROM {grade_items} gi
+        JOIN {grade_grades} gg ON gi.id = gg.itemid
+        WHERE gi.courseid = :courseid AND gi.itemtype = 'mod' 
+        AND (gi.itemmodule = 'assign' OR gi.itemmodule = 'quiz')
+        AND gg.userid = :userid
+        ORDER BY gi.timecreated";  // Urutkan berdasarkan itemname
     $params = ['courseid' => $selected_courseid, 'userid' => $userid];
 
     // Menjalankan query.
