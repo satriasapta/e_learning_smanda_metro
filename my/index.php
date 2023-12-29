@@ -194,8 +194,7 @@ if ($isstudent) {
 }
 
 elseif ($isteacher) {
-    // Tampilkan grafik untuk guru
-    // (letakkan kode untuk menampilkan grafik guru di sini)
+    chartGuru();
 }
 
 elseif ($isadmin) {

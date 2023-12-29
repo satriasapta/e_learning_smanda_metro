@@ -42,11 +42,12 @@ require_once("$CFG->libdir/blocklib.php");
  * @param string|null $pagename Differentiate between standard /my or /courses pages.
  */
 
-function chartsiswa(){
+function chartsiswa()
+{
     global $USER, $DB, $OUTPUT;
     $userid = $USER->id;
     $selected_courseid = !empty($_POST['courseid']) ? $_POST['courseid'] : null;
-    
+
     // Mengambil kursus yang diikuti pengguna.
     $sql = "SELECT c.id, c.fullname FROM {course} c
             JOIN {enrol} e ON e.courseid = c.id
@@ -54,7 +55,7 @@ function chartsiswa(){
             WHERE ue.userid = :userid";
     $params = ['userid' => $userid];
     $courses = $DB->get_records_sql($sql, $params);
-    
+
     // Membuat dropdown.
     echo '<form method="post">';
     echo '<select name="courseid">';
@@ -75,21 +76,21 @@ function chartsiswa(){
             AND gg.userid = :userid
             ORDER BY gi.timecreated";  // Urutkan berdasarkan itemname
         $params = ['courseid' => $selected_courseid, 'userid' => $userid];
-    
+
         // Menjalankan query.
         $grades = $DB->get_records_sql($sql, $params);
-    
+
         // Mengolah data untuk chart...
         $assignment_names = [];
         $assignment_grades = [];
         $grades_to_pass = [];
-    
+
         foreach ($grades as $grade) {
             $assignment_names[] = $grade->itemname;
             $assignment_grades[] = (float) $grade->finalgrade;
             $grades_to_pass[] = (float) $grade->gradepass; // Menambahkan grade to pass
         }
-    
+
         // Membuat chart bar.
         $grades_series = new \core\chart_series('Assignment Grades', $assignment_grades);
         $pass_series = new \core\chart_series('Grades to Pass', $grades_to_pass); // Series baru untuk grade to pass
@@ -99,12 +100,88 @@ function chartsiswa(){
         $chart->add_series($grades_series);
         $chart->add_series($pass_series); // Menambahkan series grade to pass ke chart
         $chart->set_labels($assignment_names);
-    
+
         // Menampilkan chart.
         echo $OUTPUT->render($chart);
     }
 }
-function my_get_page(?int $userid, int $private = MY_PAGE_PRIVATE, string $pagename = MY_PAGE_DEFAULT) {
+
+function chartGuru()
+{
+    global $USER, $DB, $OUTPUT;
+
+    $userid = $USER->id;
+    $isteacher = user_has_role_assignment($userid, 3);
+    if (!$isteacher) {
+        echo "Anda bukan guru.";
+        exit;
+    }
+
+    // Mengecek apakah ada kursus yang dipilih.
+    $selected_courseid = !empty($_POST['courseid']) ? $_POST['courseid'] : null;
+
+    // Mengambil kursus yang diampu oleh guru.
+    $sql = "SELECT c.id, c.fullname FROM {course} c
+            JOIN {context} ctx ON ctx.instanceid = c.id
+            JOIN {role_assignments} ra ON ra.contextid = ctx.id
+            WHERE ctx.contextlevel = 50 AND ra.roleid = 3 AND ra.userid = :userid";  // roleid 3 untuk guru
+    $params = ['userid' => $userid];
+    $courses = $DB->get_records_sql($sql, $params);
+
+    // Membuat dropdown.
+    echo '<form method="post">';
+    echo '<select name="courseid">';
+    foreach ($courses as $course) {
+        $isSelected = ($course->id == $selected_courseid) ? 'selected' : '';
+        echo '<option value="' . $course->id . '" ' . $isSelected . '>' . $course->fullname . '</option>';
+    }
+    echo '</select>';
+    echo '<input type="submit" value="Tampilkan Chart"/>';
+    echo '</form>';
+
+    if ($selected_courseid) {
+        // Query untuk mengambil nama kuis dan nilai siswa dari tabel mdl_quiz.
+        $sql = "SELECT qz.name AS quizname, gg.finalgrade
+                FROM {quiz} qz
+                JOIN {course_modules} cm ON cm.instance = qz.id
+                JOIN {modules} m ON m.id = cm.module
+                JOIN {grade_items} gi ON gi.iteminstance = cm.instance
+                JOIN {grade_grades} gg ON gi.id = gg.itemid
+                WHERE gi.courseid = :courseid
+                AND gi.itemmodule = 'quiz'
+                AND gg.userid = :userid
+                AND m.name = 'quiz'
+                ORDER BY qz.name";
+
+        $params = ['courseid' => $selected_courseid, 'userid' => $userid];
+        $quiz_grades = $DB->get_records_sql($sql, $params);
+
+        // Cek jika ada kuis dan hasil kuis yang ditemukan
+        if (empty($quiz_grades)) {
+            echo "Tidak ada kuis atau hasil kuis yang ditemukan untuk kursus ini.";
+        } else {
+            $quiz_names = [];
+            $student_grades = [];
+
+            foreach ($quiz_grades as $quiz_grade) {
+                $quiz_names[] = $quiz_grade->quizname;
+                $student_grades[] = (float) $quiz_grade->finalgrade;
+            }
+
+            // Membuat chart bar untuk nilai kuis.
+            $grades_series = new \core\chart_series('Quiz Grades', $student_grades);
+            $chart = new \core\chart_bar(); // Menggunakan bar chart untuk representasi nilai
+            $chart->set_title('Student Quiz Grades Chart');
+            $chart->add_series($grades_series);
+            $chart->set_labels($quiz_names);
+
+            // Menampilkan chart.
+            echo $OUTPUT->render($chart);
+        }
+    }
+}
+function my_get_page(?int $userid, int $private = MY_PAGE_PRIVATE, string $pagename = MY_PAGE_DEFAULT)
+{
     global $DB, $CFG;
 
     if (empty($CFG->forcedefaultmymoodle) && $userid) {  // Ignore custom My Moodle pages if admin has forced them
@@ -160,7 +237,7 @@ function my_copy_page(
     }
 
     // Clone the basic system page record
-    $page = clone($systempage);
+    $page = clone ($systempage);
     unset($page->id);
     $page->userid = $userid;
     $page->id = $DB->insert_record('my_pages', $page);
@@ -169,9 +246,11 @@ function my_copy_page(
     $systemcontext = context_system::instance();
     $usercontext = context_user::instance($userid);
 
-    $blockinstances = $DB->get_records('block_instances', array('parentcontextid' => $systemcontext->id,
-                                                                'pagetypepattern' => $pagetype,
-                                                                'subpagepattern' => $systempage->id));
+    $blockinstances = $DB->get_records('block_instances', array(
+        'parentcontextid' => $systemcontext->id,
+        'pagetypepattern' => $pagetype,
+        'subpagepattern' => $systempage->id
+    ));
     $roles = get_all_roles();
     $newblockinstanceids = [];
     foreach ($blockinstances as $instance) {
@@ -210,8 +289,10 @@ function my_copy_page(
     }
 
     // Clone block position overrides.
-    if ($blockpositions = $DB->get_records('block_positions',
-            ['subpage' => $systempage->id, 'pagetype' => $pagetype, 'contextid' => $systemcontext->id])) {
+    if ($blockpositions = $DB->get_records(
+        'block_positions',
+        ['subpage' => $systempage->id, 'pagetype' => $pagetype, 'contextid' => $systemcontext->id]
+    )) {
         foreach ($blockpositions as &$positions) {
             $positions->subpage = $page->id;
             $positions->contextid = $usercontext->id;
@@ -240,7 +321,7 @@ function my_copy_page(
 function my_reset_page(
     int $userid,
     int $private = MY_PAGE_PRIVATE,
-    string $pagetype='my-index',
+    string $pagetype = 'my-index',
     string $pagename = MY_PAGE_DEFAULT
 ) {
     global $DB, $CFG;
@@ -248,8 +329,10 @@ function my_reset_page(
     $page = my_get_page($userid, $private, $pagename);
     if ($page->userid == $userid) {
         $context = context_user::instance($userid);
-        if ($blocks = $DB->get_records('block_instances', array('parentcontextid' => $context->id,
-                'pagetypepattern' => $pagetype))) {
+        if ($blocks = $DB->get_records('block_instances', array(
+            'parentcontextid' => $context->id,
+            'pagetypepattern' => $pagetype
+        ))) {
             foreach ($blocks as $block) {
                 if (is_null($block->subpagepattern) || $block->subpagepattern == $page->id) {
                     blocks_delete_instance($block);
@@ -377,7 +460,8 @@ function my_reset_page_for_all_users(
     }
 }
 
-class my_syspage_block_manager extends block_manager {
+class my_syspage_block_manager extends block_manager
+{
     // HACK WARNING!
     // TODO: figure out a better way to do this
     /**
@@ -387,7 +471,8 @@ class my_syspage_block_manager extends block_manager {
      * user's context for access control, etc.  But the blocks for the system
      * pages are stored in the system context.
      */
-    public function load_blocks($includeinvisible = null) {
+    public function load_blocks($includeinvisible = null)
+    {
         $origcontext = $this->page->context;
         $this->page->context = context_system::instance();
         parent::load_blocks($includeinvisible);
