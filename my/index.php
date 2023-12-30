@@ -36,6 +36,7 @@
 
 require_once(__DIR__ . '/../config.php');
 require_once($CFG->dirroot . '/my/lib.php');
+require_once($CFG->dirroot . '/my//custom/functionCustom.php');
 
 redirect_if_major_upgrade_required();
 
@@ -100,6 +101,7 @@ $PAGE->blocks->add_region('content');
 $PAGE->set_subpage($currentpage->id);
 $PAGE->set_title($pagetitle);
 $PAGE->set_heading($pagetitle);
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/my\custom\style\styleDashboard.css'));
 
 
 
@@ -182,8 +184,47 @@ echo $OUTPUT->header();
 
 global $USER, $DB, $OUTPUT;
 
-$userid = $USER->id;
+$userid = $USER->id; // Mendapatkan ID pengguna yang saat ini login
+$isTeacher = user_has_role_assignment($userid, 3); // Ganti '3' dengan ID peran guru yang sesuai
 
+if ($isTeacher) {
+    // Jika pengguna adalah guru, hitung dan tampilkan jumlah pelajaran diampu
+    $course_count = get_taught_course_count($userid);
+    ?>
+    <div class = "col-12">
+        <div class= "row">
+            <div class="col-4">
+                <div class="dashboard-card-count">
+                    <h3>Jumlah Pelajaran Diampu</h3>
+                    <p><?php echo $course_count; ?> Pelajaran</p>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="dashboard-card-count">
+                    <h3>Jumlah Pelajaran Diampu</h3>
+                    <p><?php echo $course_count; ?> Pelajaran</p>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="dashboard-card-count">
+                    <h3>Jumlah Pelajaran Diampu</h3>
+                    <p><?php echo $course_count; ?> Pelajaran</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <?php
+} else {
+    // Opsional: Tampilkan pesan jika pengguna bukan guru
+    echo '<p>Anda tidak memiliki akses ke informasi ini.</p>';
+}
+
+
+$userid = $USER->id;
 // Mengecek peran pengguna saat ini.
 $isstudent = user_has_role_assignment($userid, 5); // Peran siswa
 $isteacher = user_has_role_assignment($userid, 3); // Peran guru
