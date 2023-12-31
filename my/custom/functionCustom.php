@@ -89,11 +89,11 @@ function chartsiswa()
         }
 
         // Membuat chart bar.
-        $grades_series = new \core\chart_series('Assignment Grades', $assignment_grades);
-        $pass_series = new \core\chart_series('Grades to Pass', $grades_to_pass); // Series baru untuk grade to pass
+        $grades_series = new \core\chart_series('Nilai Anda', $assignment_grades);
+        $pass_series = new \core\chart_series('Nilai Kelulusan', $grades_to_pass); // Series baru untuk grade to pass
         $chart = new \core\chart_line();
         $chart->set_smooth(true);
-        $chart->set_title('Assignment Grades Bar Chart');
+        $chart->set_title('Grafik Nilai Mata Pelajaran');
         $chart->add_series($grades_series);
         $chart->add_series($pass_series); // Menambahkan series grade to pass ke chart
         $chart->set_labels($assignment_names);
