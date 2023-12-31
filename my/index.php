@@ -252,7 +252,6 @@ if (core_userfeedback::should_display_reminder()) {
     core_userfeedback::print_reminder_block();
 }
 
-
 echo $OUTPUT->custom_block_region('content');
 
 echo $OUTPUT->footer();

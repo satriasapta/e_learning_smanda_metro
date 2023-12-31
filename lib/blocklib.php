@@ -2697,6 +2697,7 @@ function blocks_add_default_system_blocks() {
         ],
         'content' => [
             'timeline',
+            'calendar_month',
         ]],
         'my-index',
         $subpagepattern
