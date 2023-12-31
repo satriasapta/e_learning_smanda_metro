@@ -151,33 +151,33 @@ if (empty($CFG->forcedefaultmymoodle) && $PAGE->user_allowed_editing()) {
         }
     }
 
-    // Add button for editing page
-    $params = array('edit' => !$edit);
+//     // Add button for editing page
+//     $params = array('edit' => !$edit);
 
-    $resetbutton = '';
-    $resetstring = get_string('resetpage', 'my');
-    $reseturl = new moodle_url("$CFG->wwwroot/my/index.php", array('edit' => 1, 'reset' => 1));
+//     $resetbutton = '';
+//     $resetstring = get_string('resetpage', 'my');
+//     $reseturl = new moodle_url("$CFG->wwwroot/my/index.php", array('edit' => 1, 'reset' => 1));
 
-    if (!$currentpage->userid) {
-        // viewing a system page -- let the user customise it
-        $editstring = get_string('updatemymoodleon');
-        $params['edit'] = 1;
-    } else if (empty($edit)) {
-        $editstring = get_string('updatemymoodleon');
-    } else {
-        $editstring = get_string('updatemymoodleoff');
-        $resetbutton = $OUTPUT->single_button($reseturl, $resetstring);
-    }
+//     if (!$currentpage->userid) {
+//         // viewing a system page -- let the user customise it
+//         $editstring = get_string('updatemymoodleon');
+//         $params['edit'] = 1;
+//     } else if (empty($edit)) {
+//         $editstring = get_string('updatemymoodleon');
+//     } else {
+//         $editstring = get_string('updatemymoodleoff');
+//         $resetbutton = $OUTPUT->single_button($reseturl, $resetstring);
+//     }
 
-    $url = new moodle_url("$CFG->wwwroot/my/index.php", $params);
-    $button = '';
-    if (!$PAGE->theme->haseditswitch) {
-        $button = $OUTPUT->single_button($url, $editstring);
-    }
-    $PAGE->set_button($resetbutton . $button);
+//     $url = new moodle_url("$CFG->wwwroot/my/index.php", $params);
+//     $button = '';
+//     if (!$PAGE->theme->haseditswitch) {
+//         $button = $OUTPUT->single_button($url, $editstring);
+//     }
+//     $PAGE->set_button($resetbutton . $button);
 
-} else {
-    $USER->editing = $edit = 0;
+// } else {
+//     $USER->editing = $edit = 0;
 }
 
 echo $OUTPUT->header();
@@ -246,10 +246,6 @@ elseif ($isadmin) {
 else {
     // Tampilkan konten default atau pesan kesalahan
     echo "Role not recognized.";
-}
-
-if (core_userfeedback::should_display_reminder()) {
-    core_userfeedback::print_reminder_block();
 }
 
 echo $OUTPUT->custom_block_region('content');
