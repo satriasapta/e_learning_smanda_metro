@@ -108,13 +108,6 @@ function chartGuru()
     global $OUTPUT, $DB, $USER;
 
     $userid = $USER->id;
-    $isteacher = user_has_role_assignment($userid, 3);
-
-    if (!$isteacher) {
-        echo "Anda Bukan Guru";
-        exit;
-    }
-
     // Cek kursus yang dipilih.
     $selected_courseid = !empty($_POST['courseid']) ? $_POST['courseid'] : null;
 
@@ -140,13 +133,14 @@ function chartGuru()
     // Jika kursus telah dipilih, jalankan query untuk nilai dan buat chart.
     if ($selected_courseid) {
         // Query untuk mengambil nilai kuis, grade to pass, dan jumlah siswa.
-        $sql = "SELECT gi.itemname, gg.finalgrade, gi.gradepass, COUNT(DISTINCT gg.userid) AS studentcount
+        $sql = "SELECT gi.itemname, AVG(gg.finalgrade) AS averagegrade, gi.gradepass, COUNT(DISTINCT CASE WHEN gg.finalgrade IS NOT NULL THEN gg.userid END) AS studentcount
                 FROM {grade_items} gi
                 JOIN {grade_grades} gg ON gi.id = gg.itemid
                 JOIN {course} c ON gi.courseid = c.id
                 WHERE gi.courseid = :courseid AND gi.itemmodule = 'quiz' AND gi.itemtype = 'mod'
-                GROUP BY gi.itemname, gg.finalgrade, gi.gradepass
+                GROUP BY gi.itemname, gi.gradepass
                 ORDER BY gi.itemname";
+
 
         $params = ['courseid' => $selected_courseid];
         $grades_data = $DB->get_records_sql($sql, $params);
@@ -156,25 +150,25 @@ function chartGuru()
         } else {
             // Mengolah data untuk chart.
             $quiz_names = [];
-            $quiz_grades = [];
+            $quiz_averages = [];
             $grades_to_pass = [];
             $student_counts = [];
 
             foreach ($grades_data as $data) {
-                $quiz_name = $data->itemname . ' (' . $data->studentcount . ' students)'; // Menambahkan jumlah siswa ke label
+                $quiz_name = $data->itemname . ' (' . $data->studentcount . ' siswa Mengerjakan)'; // Menambahkan jumlah siswa ke label
                 $quiz_names[] = $quiz_name;
-                $quiz_grades[] = (float) $data->finalgrade;
+                $quiz_averages[] = (float) $data->averagegrade;
                 $grades_to_pass[] = (float) $data->gradepass;
                 $student_counts[] = $data->studentcount;
             }
 
             // Membuat series untuk chart.
-            $grades_series = new \core\chart_series('Quiz Grades', $quiz_grades);
-            $pass_series = new \core\chart_series('Grades to Pass', $grades_to_pass);
+            $grades_series = new \core\chart_series('Rata-rata Nilai Kuis', $quiz_averages);
+            $pass_series = new \core\chart_series('Nilai Kelulusan', $grades_to_pass);
 
             // Membuat chart bar.
             $chart = new \core\chart_bar();
-            $chart->set_title('Quiz Grades Chart');
+            $chart->set_title('Grafik Nilai Kuis');
             $chart->add_series($grades_series);
             $chart->add_series($pass_series);
             $chart->set_labels($quiz_names);
@@ -182,7 +176,7 @@ function chartGuru()
             // Menampilkan informasi jumlah siswa di setiap label
             foreach ($quiz_names as $index => $name) {
                 $student_count = $student_counts[$index];
-                $quiz_names[$index] = "{$name} ({$student_count} students)";
+                $quiz_names[$index] = "{$name} ({$student_count} siswa Mengerjakan)";
             }
 
             // Menampilkan chart.

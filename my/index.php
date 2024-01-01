@@ -215,15 +215,8 @@ if ($isTeacher) {
             </div>
         </div>
     </div>
-    
-
     <?php
-} else {
-    // Opsional: Tampilkan pesan jika pengguna bukan guru
-    echo '<p>Anda tidak memiliki akses ke informasi ini.</p>';
 }
-
-
 $userid = $USER->id;
 // Mengecek peran pengguna saat ini.
 $isstudent = user_has_role_assignment($userid, 5); // Peran siswa
