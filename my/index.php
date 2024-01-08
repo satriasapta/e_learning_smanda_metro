@@ -188,6 +188,7 @@ $userid = $USER->id;
 // Mengecek peran pengguna saat ini.
 $isstudent = user_has_role_assignment($userid, 5); // Peran siswa
 $isteacher = user_has_role_assignment($userid, 3); // Peran guru
+$isadmin = is_siteadmin($userid);
 
 if ($isstudent) {
     chartsiswa();
@@ -226,6 +227,38 @@ elseif ($isteacher) {
 }
 
 elseif ($isadmin) {
+
+    $course_count = get_taught_course_count($userid);
+    $total_students = get_total_role_count(5); 
+    $total_teacher = get_total_role_count(3); 
+    $total_admin = get_total_role_count(1)
+    ?>
+
+    <div class = "col-12">
+        <div class= "row">
+            <div class="col-4">
+                <div class="dashboard-card-count">
+                    <h3>Jumlah siswa</h3>
+                    <p><?php echo $total_students; ?> </p>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="dashboard-card-count">
+                    <h3>Jumlah Guru</h3>
+                    <p><?php echo $total_teacher; ?>  </p>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="dashboard-card-count">
+                    <h3>Jumlah Admin</h3>
+                    <p><?php echo $total_admin; ?> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
 
 }
 
