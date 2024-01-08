@@ -184,12 +184,18 @@ echo $OUTPUT->header();
 
 global $USER, $DB, $OUTPUT;
 
-$userid = $USER->id; // Mendapatkan ID pengguna yang saat ini login
-$isTeacher = user_has_role_assignment($userid, 3); // Ganti '3' dengan ID peran guru yang sesuai
+$userid = $USER->id;
+// Mengecek peran pengguna saat ini.
+$isstudent = user_has_role_assignment($userid, 5); // Peran siswa
+$isteacher = user_has_role_assignment($userid, 3); // Peran guru
 
-if ($isTeacher) {
-    // Jika pengguna adalah guru, hitung dan tampilkan jumlah pelajaran diampu
+if ($isstudent) {
+    chartsiswa();
+}
+
+elseif ($isteacher) {
     $course_count = get_taught_course_count($userid);
+    $total_students = get_total_role_count(5); 
     ?>
     <div class = "col-12">
         <div class= "row">
@@ -202,8 +208,8 @@ if ($isTeacher) {
 
             <div class="col-4">
                 <div class="dashboard-card-count">
-                    <h3>Jumlah Pelajaran Diampu</h3>
-                    <p><?php echo $course_count; ?> Pelajaran</p>
+                    <h3>Total Siswa</h3>
+                    <p><?php echo $total_students; ?> Siswa </p>
                 </div>
             </div>
 
@@ -216,24 +222,11 @@ if ($isTeacher) {
         </div>
     </div>
     <?php
-}
-$userid = $USER->id;
-// Mengecek peran pengguna saat ini.
-$isstudent = user_has_role_assignment($userid, 5); // Peran siswa
-$isteacher = user_has_role_assignment($userid, 3); // Peran guru
-$isadmin = is_siteadmin($userid); // administrator
-
-if ($isstudent) {
-    chartsiswa();
-}
-
-elseif ($isteacher) {
     chartGuru();
 }
 
 elseif ($isadmin) {
-    // Tampilkan grafik untuk administrator
-    // (letakkan kode untuk menampilkan grafik administrator di sini)
+
 }
 
 else {

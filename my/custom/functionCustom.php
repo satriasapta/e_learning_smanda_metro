@@ -38,6 +38,18 @@ function get_taught_course_count($userid) {
     return $DB->count_records_sql($sql, ['userid' => $userid]);
 }
 
+function get_total_role_count($roleid) {
+    global $DB;
+
+    $sql = "SELECT COUNT(DISTINCT ra.userid)
+            FROM {role_assignments} ra
+            JOIN {context} ctx ON ra.contextid = ctx.id
+            JOIN {role} r ON ra.roleid = r.id
+            WHERE r.id = :roleid AND ctx.contextlevel = 50";
+
+    return $DB->count_records_sql($sql, array('roleid' => $roleid));
+}
+
 //fungsi chart
 function chartsiswa()
 {
