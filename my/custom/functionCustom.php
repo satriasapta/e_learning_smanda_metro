@@ -1,4 +1,36 @@
-<?php 
+<style>
+    select[name="courseid"] {
+        padding: 10px;
+        margin-right: 25px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        background-color: white;
+        box-shadow: #0056b3;
+        transition: border-color 0.3s;
+    }
+
+    select[name="courseid"]:focus {
+        border-color: #ccc;
+    }
+
+    input[type="submit"] {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        background-color: #0056b3;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<?php
 
 /**
  * My Moodle -- a user's personal dashboard
@@ -13,23 +45,24 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- define('MY_PAGE_PUBLIC', 0);
- define('MY_PAGE_PRIVATE', 1);
- define('MY_PAGE_DEFAULT', '__default');
- define('MY_PAGE_COURSES', '__courses');
- 
- require_once("$CFG->libdir/blocklib.php");
- 
- /**
-  * For a given user, this returns the $page information for their My Moodle page
-  *
-  * @param int|null $userid the id of the user whose page should be retrieved
-  * @param int|null $private either MY_PAGE_PRIVATE or MY_PAGE_PUBLIC
-  * @param string|null $pagename Differentiate between standard /my or /courses pages.
-  */
+define('MY_PAGE_PUBLIC', 0);
+define('MY_PAGE_PRIVATE', 1);
+define('MY_PAGE_DEFAULT', '__default');
+define('MY_PAGE_COURSES', '__courses');
+
+require_once("$CFG->libdir/blocklib.php");
+
+/**
+ * For a given user, this returns the $page information for their My Moodle page
+ *
+ * @param int|null $userid the id of the user whose page should be retrieved
+ * @param int|null $private either MY_PAGE_PRIVATE or MY_PAGE_PUBLIC
+ * @param string|null $pagename Differentiate between standard /my or /courses pages.
+ */
 
 
-function get_taught_course_count($userid) {
+function get_taught_course_count($userid)
+{
     global $DB;
     $sql = "SELECT COUNT(*) FROM {course} c
             JOIN {context} ctx ON ctx.instanceid = c.id
@@ -38,7 +71,8 @@ function get_taught_course_count($userid) {
     return $DB->count_records_sql($sql, ['userid' => $userid]);
 }
 
-function get_total_role_count($roleid) {
+function get_total_role_count($roleid)
+{
     global $DB;
 
     $sql = "SELECT COUNT(DISTINCT ra.userid)
@@ -66,14 +100,14 @@ function chartsiswa()
     $courses = $DB->get_records_sql($sql, $params);
 
     // Membuat dropdown.
-    echo '<form method="post">';
+    echo '<form method="post" style="margin-top: 30px;">';
     echo '<select name="courseid">';
     foreach ($courses as $course) {
         $isSelected = ($course->id == $selected_courseid) ? 'selected' : '';
         echo '<option value="' . $course->id . '" ' . $isSelected . '>' . $course->fullname . '</option>';
     }
     echo '</select>';
-    echo '<input type="submit" value="Tampilkan Chart"/>';
+    echo '<input type="submit" value="Tampilkan Chart" style="margin-bottom: 25px;"/>';
     echo '</form>';
     if ($selected_courseid) {
         // Query untuk mengambil nilai tugas dan grade to pass, diurutkan berdasarkan itemname.
@@ -88,30 +122,34 @@ function chartsiswa()
 
         // Menjalankan query.
         $grades = $DB->get_records_sql($sql, $params);
+        if (empty($grades)) {
+            echo '<div style="margin-bottom: 25px; text-align:center;">Tidak ada nilai kuis yang ditemukan untuk kursus ini.</div>';
+        }else{
+            // Mengolah data untuk chart...
+            $assignment_names = [];
+            $assignment_grades = [];
+            $grades_to_pass = [];
 
-        // Mengolah data untuk chart...
-        $assignment_names = [];
-        $assignment_grades = [];
-        $grades_to_pass = [];
+            foreach ($grades as $grade) {
+                $assignment_names[] = $grade->itemname;
+                $assignment_grades[] = (float) $grade->finalgrade;
+                $grades_to_pass[] = (float) $grade->gradepass; // Menambahkan grade to pass
+            }
 
-        foreach ($grades as $grade) {
-            $assignment_names[] = $grade->itemname;
-            $assignment_grades[] = (float) $grade->finalgrade;
-            $grades_to_pass[] = (float) $grade->gradepass; // Menambahkan grade to pass
+            // Membuat chart bar.
+            $grades_series = new \core\chart_series('Nilai Anda', $assignment_grades);
+            $pass_series = new \core\chart_series('Nilai Kelulusan', $grades_to_pass); // Series baru untuk grade to pass
+            $chart = new \core\chart_line();
+            $chart->set_smooth(true);
+            $chart->set_title('Grafik Nilai Mata Pelajaran');
+            $chart->add_series($grades_series);
+            $chart->add_series($pass_series); // Menambahkan series grade to pass ke chart
+            $chart->set_labels($assignment_names);
+
+            // Menampilkan chart.
+            echo $OUTPUT->render($chart);
+
         }
-
-        // Membuat chart bar.
-        $grades_series = new \core\chart_series('Nilai Anda', $assignment_grades);
-        $pass_series = new \core\chart_series('Nilai Kelulusan', $grades_to_pass); // Series baru untuk grade to pass
-        $chart = new \core\chart_line();
-        $chart->set_smooth(true);
-        $chart->set_title('Grafik Nilai Mata Pelajaran');
-        $chart->add_series($grades_series);
-        $chart->add_series($pass_series); // Menambahkan series grade to pass ke chart
-        $chart->set_labels($assignment_names);
-
-        // Menampilkan chart.
-        echo $OUTPUT->render($chart);
     }
 }
 
@@ -132,14 +170,14 @@ function chartGuru()
     $courses = $DB->get_records_sql($sql, $params);
 
     // Membuat dropdown.
-    echo '<form method="post">';
-    echo '<select name="courseid" style="margin-right: 25px;">';
+    echo '<form method="post" style="margin-top: 30px;">';
+    echo '<select name="courseid">';
     foreach ($courses as $course) {
         $isSelected = ($course->id == $selected_courseid) ? 'selected' : '';
         echo '<option value="' . $course->id . '" ' . $isSelected . '>' . $course->fullname . '</option>';
     }
     echo '</select>';
-    echo '<input type="submit" value="Tampilkan Chart" style="margin-bottom: 45px;"/>';
+    echo '<input type="submit" value="Tampilkan Chart" style="margin-bottom: 25px;"/>';
     echo '</form>';
 
     // Jika kursus telah dipilih, jalankan query untuk nilai dan buat chart.
@@ -158,7 +196,7 @@ function chartGuru()
         $grades_data = $DB->get_records_sql($sql, $params);
 
         if (empty($grades_data)) {
-            echo '<div style="margin-bottom: 25px;">Tidak ada nilai kuis yang ditemukan untuk kursus ini.</div>';
+            echo '<div style="margin-bottom: 25px; text-align:center;">Tidak ada nilai kuis yang ditemukan untuk kursus ini.</div>';
         } else {
             // Mengolah data untuk chart.
             $quiz_names = [];

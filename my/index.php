@@ -201,21 +201,21 @@ elseif ($isteacher) {
     <div class = "col-12">
         <div class= "row">
             <div class="col-4">
-                <div class="dashboard-card-count">
-                    <h3>Jumlah Pelajaran Diampu</h3>
+                <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
+                    <h3>Pelajaran Diampu</h3>
                     <p><?php echo $course_count; ?> Pelajaran</p>
                 </div>
             </div>
 
             <div class="col-4">
-                <div class="dashboard-card-count">
+                <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
                     <h3>Total Siswa</h3>
                     <p><?php echo $total_students; ?> Siswa </p>
                 </div>
             </div>
 
             <div class="col-4">
-                <div class="dashboard-card-count">
+                <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
                     <h3>Jumlah Pelajaran Diampu</h3>
                     <p><?php echo $course_count; ?> Pelajaran</p>
                 </div>
@@ -237,21 +237,21 @@ elseif ($isadmin) {
     <div class = "col-12">
         <div class= "row">
             <div class="col-4">
-                <div class="dashboard-card-count">
+                <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
                     <h3>Jumlah siswa</h3>
                     <p><?php echo $total_students; ?> </p>
                 </div>
             </div>
 
             <div class="col-4">
-                <div class="dashboard-card-count">
+                <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
                     <h3>Jumlah Guru</h3>
                     <p><?php echo $total_teacher; ?>  </p>
                 </div>
             </div>
 
             <div class="col-4">
-                <div class="dashboard-card-count">
+                <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
                     <h3>Jumlah Admin</h3>
                     <p><?php echo $total_admin; ?> </p>
                 </div>

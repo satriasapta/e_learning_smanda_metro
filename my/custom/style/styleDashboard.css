@@ -1,10 +1,10 @@
 .dashboard-card-count {
     color: #4154f1;
-    background: #88B77B;
+    background: #0f47ad;
     border-radius: 10px; /* Sudut bulat */
     color: white; /* Warna teks */
     padding: 15px; /* Padding di dalam card */
-    font-family: 'Arial', sans-serif; /* Jenis font */
+    font-family: 'Roboto'; /* Jenis font */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Bayangan ringan untuk efek 3D */
     text-align: center; /* Teks di tengah */
     margin-bottom: 20px;
@@ -17,7 +17,6 @@
 }
 
 .dashboard-card-count p {
-    margin: 10px 0; /* Margin atas dan bawah */
+    margin: 15px 0; /* Margin atas dan bawah */
     font-size: 1.2em; /* Ukuran font untuk teks */
 }
-
