@@ -13,8 +13,8 @@ if (has_capability('moodle/site:config', context_system::instance())) {
     $settings = new admin_settingpage('local_resourcenotif', get_string('pluginname', 'local_resourcenotif'));
     $ADMIN->add('localplugins', $settings);
 
-    $defaultmsg = '[[sender]] would like to draw your attention to the activity/resource '
-        . '[[linkactivity]] available within the course [[linkcourse]].';
+    $defaultmsg = '[[sender]] ingin memberi tahu anda bahwa ada aktivitas '
+        . '[[linkactivity]] yang tersedia dalam pelajaran [[linkcourse]].';
     $description = get_string('descriptionmsg', 'local_resourcenotif');
     $message = new admin_setting_configtextarea('message_body',
         get_string('body', 'local_resourcenotif'),

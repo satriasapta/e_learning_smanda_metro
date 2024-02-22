@@ -7,30 +7,30 @@
 
 $string['pluginname'] = 'Resource notification';
 
-$string['allstudentrecipient'] = 'Students enrolled in this course ({$a}).';
-$string['body'] = 'Message body: ';
-$string['complement'] = 'Additional comments (optional): ';
-$string['content'] = 'Content';
-$string['errorselectgroup'] = 'You must select at least one group/grouping';
-$string['errorselectrecipicent'] = 'Please select a recipicent';
-$string['errorselectstudent'] = 'You must select at least one participant';
-$string['groupsgroupingsnone'] = 'No groups/groupings';
-$string['grouprecipient'] = 'Participants permitted to view <a href="{$a->linkactivity}">{$a->nameactivity}</a> ({$a->nbdest} users - Restrict access conditions have been applied to this activity/resource; <a href="{$a->editactivity}">view details</a>)';
-$string['nomessagesend'] = 'No sent message.';
-$string['norecipient'] = 'No recipient.';
-$string['numbernotification'] = 'Number of notifications sent: {$a}';
-$string['recipients'] = 'Recipients';
-$string['returncourse'] = 'Return to course';
-$string['selectedmembers'] = 'Members of selected groups/groupings: ';
-$string['selectstudents'] = 'Individual participants';
-$string['sender'] = 'Sender: ';
-$string['sendnotification'] = 'Send a notification';
-$string['subject'] = 'Subject: ';
-$string['submit'] = 'Send';
+$string['allstudentrecipient'] = 'Siswa yang bergabung pada pelajaran ini ({$a}).';
+$string['body'] = 'Badan pesan : ';
+$string['complement'] = 'Komentar tambahan (opsional) : ';
+$string['content'] = 'Konten';
+$string['errorselectgroup'] = 'Anda harus memilih setidaknya satu grup/pengelompokan';
+$string['errorselectrecipicent'] = 'Silakan pilih penerima';
+$string['errorselectstudent'] = 'Anda harus memilih setidaknya satu peserta';
+$string['groupsgroupingsnone'] = 'Tidak ada grup/pengelompokan';
+$string['grouprecipient'] = 'Peserta diperbolehkan untuk melihat <a href="{$a->linkactivity}">{$a->nameactivity}</a> ({$a->nbdest} pengguna - Ketentuan pembatasan akses telah diterapkan pada aktivitas ini; <a href="{$a->editactivity}">lihat lebih lengkap</a>)';
+$string['nomessagesend'] = 'Tidak ada pesan terkirim.';
+$string['norecipient'] = 'Tidak ada penerima.';
+$string['numbernotification'] = 'Jumlah notifikasi yang dikirim: {$a}';
+$string['recipients'] = 'Penerima';
+$string['returncourse'] = 'Kembali ke pelajaran';
+$string['selectedmembers'] = 'Anggota kelompok/pengelompokan terpilih: ';
+$string['selectstudents'] = 'Peserta individu';
+$string['sender'] = 'Pengirim: ';
+$string['sendnotification'] = 'Mengirim Notifikasi';
+$string['subject'] = 'Subjek: ';
+$string['submit'] = 'Kirim';
 
 //admin setting
-$string['descriptionmsg'] = 'Available parameters: [[sender]], [[linkactivity]], [[linkcourse]]';
-$string['notification'] = 'Notification: ';
+$string['descriptionmsg'] = 'Parameter yang tersedia: [[sender]], [[linkactivity]], [[linkcourse]]';
+$string['notification'] = 'Notifikasi: ';
 
 //Default message outputs
-$string['messageprovider:resourcenotif_notification'] = 'Activity/resource notifications';
+$string['messageprovider:resourcenotif_notification'] = 'Pemberitahuan Aktivitas';
