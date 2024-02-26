@@ -110,7 +110,15 @@ class primary implements renderable, templatable
         $coursecontext = \context_course::instance($COURSE->id);
         if (isloggedin()) {
             if (has_capability('moodle/role:manage', $coursecontext)) {
-                $menuitems = "Kelola Kategori | /course/management.php \n Kelas Baru | /course/edit.php \n Tambah Pengguna | /user/editadvanced.php?id=-1";
+                $menuitems = "
+                    Kelola Kategori|
+                    -Data Kategori Kelas | /course \n
+                    -Kategori Kelas dan Pelajaran| /course/management.php \n
+
+                    Pengguna | 
+                    -Data Pengguna | /admin/user.php \n
+                    -Tambah Pengguna | /user/editadvanced.php?id=-1";
+
             } else if (has_capability('moodle/role:teacher', $coursecontext)) {
                 $menuitems = "Kategori Kelas | /course/";
             } else {
