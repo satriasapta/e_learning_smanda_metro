@@ -60,7 +60,6 @@
     {{> theme_moove/navbar }}
 
     <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers drag-container bg-white">
-        {{!--carousel halaman frontpage}}
         {{#slidercount}}
             <div id="mooveslideshow" class="container-fluid">
                 <div id="carousel-indicators" class="carousel slide carousel-fade" data-ride="carousel">
@@ -93,6 +92,72 @@
                 </div>
             </div>
         {{/slidercount}}
+
+        {{#displaymarketingbox}}
+            <section id="feature">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 my-3">
+                            <h3 class="h1 mt-3 mb-3">{{{marketingheading}}}</h3>
+                            <div class="marketing-content">{{{marketingcontent}}}</div>
+                        </div>
+                        <div class="col-lg-8 ps-xl-8">
+                            <div class="row">
+                                {{#marketingboxes}}
+                                    <div class="col-sm-6 mt-4">
+                                        <div class="card card-body shadow">
+                                            <div class="d-flex">
+                                                <div class="icon-lg text-white rounded-circle">
+                                                    <img src="{{{icon}}}">
+                                                </div>
+                                                <div class="col ps-3">
+                                                    <h5>{{{heading}}}</h5>
+                                                    <div class="box-content">{{{content}}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{/marketingboxes}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {{/displaymarketingbox}}
+
+        {{#numbersfrontpage}}
+            <section id="numbers">
+                <div class="moove-container-fluid">
+                    <div class="row customer-area-l1 justify-content-center align-items-center ">
+                        <div class="col-xl-5 col-lg-5 col-md-10">
+                            <div class="sectionheading">
+                                {{{numberscontent}}}
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-7 col-md-10 offset-xl-1">
+                            <div class="row user-rating-box-area">
+                                <div class="col-sm-6 col-xs-8">
+                                    <div class="h-100 rate-box bg-primary">
+                                        <h3>
+                                            {{{numbersusers}}}
+                                        </h3>
+                                        <p>{{#str}}numbersusers, theme_moove{{/str}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-8">
+                                    <div class="h-100 rate-box rate-box-2 bg-cloudburst">
+                                        <h3>
+                                            {{{numberscourses}}}
+                                        </h3>
+                                        <p>{{#str}}numberscourses, theme_moove{{/str}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {{/numbersfrontpage}}
 
         <div id="topofscroll">
             <div id="page-content" class="d-print-block main-inner">

@@ -241,6 +241,107 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_heading('slidercountseparator', '', '<hr>');
     $page->add($setting);
 
+    $name = 'theme_moove/displaymarketingbox';
+    $title = get_string('displaymarketingboxes', 'theme_moove');
+    $description = get_string('displaymarketingboxesdesc', 'theme_moove');
+    $default = 1;
+    $choices = array(0 => get_string('no'), 1 => get_string('yes'));
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $page->add($setting);
+
+    $displaymarketingbox = get_config('theme_moove', 'displaymarketingbox');
+
+    if ($displaymarketingbox) {
+        // Marketingheading.
+        $name = 'theme_moove/marketingheading';
+        $title = get_string('marketingsectionheading', 'theme_moove');
+        $default = 'Awesome App Features';
+        $setting = new admin_setting_configtext($name, $title, '', $default);
+        $page->add($setting);
+
+        // Marketingcontent.
+        $name = 'theme_moove/marketingcontent';
+        $title = get_string('marketingsectioncontent', 'theme_moove');
+        $default = 'Moove is a Moodle template based on Boost with modern and creative design.';
+        $setting = new admin_setting_confightmleditor($name, $title, '', $default);
+        $page->add($setting);
+
+        for ($i = 1; $i < 5; $i++) {
+            $filearea = "marketing{$i}icon";
+            $name = "theme_moove/$filearea";
+            $title = get_string('marketingicon', 'theme_moove', $i . '');
+            $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.tiff', '.svg'));
+            $setting = new admin_setting_configstoredfile($name, $title, '', $filearea, 0, $opts);
+            $page->add($setting);
+
+            $name = "theme_moove/marketing{$i}heading";
+            $title = get_string('marketingheading', 'theme_moove', $i . '');
+            $default = 'Lorem';
+            $setting = new admin_setting_configtext($name, $title, '', $default);
+            $page->add($setting);
+
+            $name = "theme_moove/marketing{$i}content";
+            $title = get_string('marketingcontent', 'theme_moove', $i . '');
+            $default = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.';
+            $setting = new admin_setting_confightmleditor($name, $title, '', $default);
+            $page->add($setting);
+        }
+
+        $setting = new admin_setting_heading('displaymarketingboxseparator', '', '<hr>');
+        $page->add($setting);
+    }
+
+    // Enable or disable Numbers sections settings.
+    $name = 'theme_moove/numbersfrontpage';
+    $title = get_string('numbersfrontpage', 'theme_moove');
+    $description = get_string('numbersfrontpagedesc', 'theme_moove');
+    $default = 1;
+    $choices = array(0 => get_string('no'), 1 => get_string('yes'));
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $page->add($setting);
+
+    $numbersfrontpage = get_config('theme_moove', 'numbersfrontpage');
+
+    if ($numbersfrontpage) {
+        $name = 'theme_moove/numbersfrontpagecontent';
+        $title = get_string('numbersfrontpagecontent', 'theme_moove');
+        $description = get_string('numbersfrontpagecontentdesc', 'theme_moove');
+        $default = get_string('numbersfrontpagecontentdefault', 'theme_moove');
+        $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+        $page->add($setting);
+    }
+
+    // Enable FAQ.
+    $name = 'theme_moove/faqcount';
+    $title = get_string('faqcount', 'theme_moove');
+    $description = get_string('faqcountdesc', 'theme_moove');
+    $default = 0;
+    $options = array();
+    for ($i = 0; $i < 11; $i++) {
+        $options[$i] = $i;
+    }
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $options);
+    $page->add($setting);
+
+    $faqcount = get_config('theme_moove', 'faqcount');
+
+    if ($faqcount > 0) {
+        for ($i = 1; $i <= $faqcount; $i++) {
+            $name = "theme_moove/faqquestion{$i}";
+            $title = get_string('faqquestion', 'theme_moove', $i . '');
+            $setting = new admin_setting_configtext($name, $title, '', '');
+            $page->add($setting);
+
+            $name = "theme_moove/faqanswer{$i}";
+            $title = get_string('faqanswer', 'theme_moove', $i . '');
+            $setting = new admin_setting_confightmleditor($name, $title, '', '');
+            $page->add($setting);
+        }
+
+        $setting = new admin_setting_heading('faqseparator', '', '<hr>');
+        $page->add($setting);
+    }
+
     $settings->add($page);
 
     /*

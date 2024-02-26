@@ -15,7 +15,7 @@ $CFG->dboptions = array(
   'dbpersist' => 0,
   'dbport' => 3306,
   'dbsocket' => '',
-  'dbcollation' => 'utf8mb4_unicode_ci',
+  'dbcollation' => 'utf8mb4_general_ci',
 );
 
 $CFG->wwwroot   = 'http://localhost/e_learning_smanda_metro';
