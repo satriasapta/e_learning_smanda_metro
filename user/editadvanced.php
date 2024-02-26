@@ -23,13 +23,13 @@
  */
 
 require_once('../config.php');
-require_once($CFG->libdir.'/gdlib.php');
-require_once($CFG->libdir.'/adminlib.php');
-require_once($CFG->dirroot.'/user/editadvanced_form.php');
-require_once($CFG->dirroot.'/user/editlib.php');
-require_once($CFG->dirroot.'/user/profile/lib.php');
-require_once($CFG->dirroot.'/user/lib.php');
-require_once($CFG->dirroot.'/webservice/lib.php');
+require_once($CFG->libdir . '/gdlib.php');
+require_once($CFG->libdir . '/adminlib.php');
+require_once($CFG->dirroot . '/user/editadvanced_form.php');
+require_once($CFG->dirroot . '/user/editlib.php');
+require_once($CFG->dirroot . '/user/profile/lib.php');
+require_once($CFG->dirroot . '/user/lib.php');
+require_once($CFG->dirroot . '/webservice/lib.php');
 
 $id     = optional_param('id', $USER->id, PARAM_INT);    // User id; -1 if creating new user.
 $course = optional_param('course', SITEID, PARAM_INT);   // Course id (defaults to Site).
@@ -145,17 +145,20 @@ if ($user->id !== -1) {
 // Prepare filemanager draft area.
 $draftitemid = 0;
 $filemanagercontext = $editoroptions['context'];
-$filemanageroptions = array('maxbytes'       => $CFG->maxbytes,
-                             'subdirs'        => 0,
-                             'maxfiles'       => 1,
-                             'accepted_types' => 'optimised_image');
+$filemanageroptions = array(
+    'maxbytes'       => $CFG->maxbytes,
+    'subdirs'        => 0,
+    'maxfiles'       => 1,
+    'accepted_types' => 'optimised_image'
+);
 file_prepare_draft_area($draftitemid, $filemanagercontext->id, 'user', 'newicon', 0, $filemanageroptions);
 $user->imagefile = $draftitemid;
 // Create form.
 $userform = new user_editadvanced_form(new moodle_url($PAGE->url, array('returnto' => $returnto)), array(
     'editoroptions' => $editoroptions,
     'filemanageroptions' => $filemanageroptions,
-    'user' => $user));
+    'user' => $user
+));
 
 
 // Deciding where to send the user back in most cases.
@@ -363,6 +366,7 @@ if ($user->id == -1 or ($user->id != $USER->id)) {
 }
 
 // Finally display THE form.
+echo '<a href="' . $CFG->wwwroot . '/admin/tool/uploaduser/index.php" class="btn btn-primary"> Upload Pengguna </a>';
 $userform->display();
 
 // And proper footer.
