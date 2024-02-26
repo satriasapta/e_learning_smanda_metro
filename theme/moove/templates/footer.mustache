@@ -169,12 +169,9 @@
     </div>
 
     <div data-region="footer-container-popover">
-        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-        <df-messenger
-        chat-title="SmartBot"
-        agent-id="1eb4677b-1996-4edf-acb5-4a2bebf5d819"
-        language-code="id"
-        ></df-messenger>
+        <button class="btn btn-icon bg-secondary icon-no-margin btn-footer-popover" data-action="footer-popover" aria-label="{{#str}}showfooter, theme_boost{{/str}}">
+            {{#pix}}e/question, core{{/pix}}
+        </button>
     </div>
     <div class="footer-content-popover container" data-region="footer-content-popover">
         {{# output.has_popover_links }}
@@ -195,6 +192,15 @@
                     {{#str}}version, core{{/str}} {{{ output.moodle_release }}}
                 </div>
             {{/output.moodle_release}}
+        </div>
+    </div>
+
+    <div class="copyright">
+        <div class="madeby">
+            <p>{{#str}}themedevelopedby, theme_moove{{/str}}</p>
+            <a href="https://conecti.me">
+                <img src="{{config.wwwroot}}/theme/moove/pix/logo_conectime.svg" alt="Conecti.me" style="height: 40px;">
+            </a>
         </div>
     </div>
 </footer>
