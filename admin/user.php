@@ -420,11 +420,11 @@
             $table->data[] = $row;
         }
     }
-
+    
     // add filters
     $ufiltering->display_add();
     $ufiltering->display_active();
-
+    
     if (!empty($table)) {
         echo html_writer::start_tag('div', array('class'=>'no-overflow'));
         echo html_writer::table($table);
@@ -435,5 +435,7 @@
         $url = new moodle_url('/user/editadvanced.php', array('id' => -1));
         echo $OUTPUT->single_button($url, get_string('addnewuser'), 'get');
     }
+    echo '<a href="'.$CFG->wwwroot.'/admin/export_users.php" class="btn btn-primary" style="margin-left:10px"> Unduh Data Pengguna </a>';
+    
 
     echo $OUTPUT->footer();
