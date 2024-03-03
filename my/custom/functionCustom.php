@@ -124,7 +124,7 @@ function chartsiswa()
         $grades = $DB->get_records_sql($sql, $params);
         if (empty($grades)) {
             echo '<div style="margin-bottom: 25px; text-align:center;">Tidak ada nilai kuis yang ditemukan untuk kursus ini.</div>';
-        }else{
+        } else {
             // Mengolah data untuk chart...
             $assignment_names = [];
             $assignment_grades = [];
@@ -148,7 +148,6 @@ function chartsiswa()
 
             // Menampilkan chart.
             echo $OUTPUT->render($chart);
-
         }
     }
 }
@@ -169,6 +168,7 @@ function chartGuru()
     $params = ['userid' => $userid];
     $courses = $DB->get_records_sql($sql, $params);
 
+    echo '<h3>Grafik Nilai Kuis dan Ujian</h3>';
     // Membuat dropdown.
     echo '<form method="post" style="margin-top: 30px;">';
     echo '<select name="courseid">';
@@ -217,8 +217,8 @@ function chartGuru()
             $pass_series = new \core\chart_series('Nilai Kelulusan', $grades_to_pass);
 
             // Membuat chart bar.
-            $chart = new \core\chart_bar();
-            $chart->set_title('Grafik Nilai Kuis');
+            $chart = new \core\chart_line();
+            $chart->set_title('Grafik Nilai Kuis Siswa');
             $chart->add_series($grades_series);
             $chart->add_series($pass_series);
             $chart->set_labels($quiz_names);
