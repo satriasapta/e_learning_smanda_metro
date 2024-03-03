@@ -213,13 +213,6 @@ elseif ($isteacher) {
                     <p><?php echo $total_students; ?> Siswa </p>
                 </div>
             </div>
-
-            <div class="col-4">
-                <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
-                    <h3>Jumlah Pelajaran Diampu</h3>
-                    <p><?php echo $course_count; ?> Pelajaran</p>
-                </div>
-            </div>
         </div>
     </div>
     <?php
