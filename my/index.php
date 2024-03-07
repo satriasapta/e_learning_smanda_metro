@@ -37,6 +37,7 @@
 require_once(__DIR__ . '/../config.php');
 require_once($CFG->dirroot . '/my/lib.php');
 require_once($CFG->dirroot . '/my//custom/functionCustom.php');
+require_once($CFG->dirroot . '/my//custom//style/styleDashboard.css');
 
 redirect_if_major_upgrade_required();
 
@@ -77,7 +78,6 @@ if (isguestuser()) {  // Force them to see system default, no editing allowed
     $PAGE->set_blocks_editing_capability('moodle/my:configsyspages');  // unlikely :)
     $strguest = get_string('guest');
     $pagetitle = "$strmymoodle ($strguest)";
-
 } else {        // We are trying to view or edit our own My Moodle page
     $userid = $USER->id;  // Owner of the page
     $context = context_user::instance($USER->id);
@@ -112,8 +112,11 @@ if (!isguestuser()) {   // Skip default home page for guests
         } else if (!empty($CFG->defaulthomepage) && $CFG->defaulthomepage == HOMEPAGE_USER) {
             $frontpagenode = $PAGE->settingsnav->add(get_string('frontpagesettings'), null, navigation_node::TYPE_SETTING, null);
             $frontpagenode->force_open();
-            $frontpagenode->add(get_string('makethismyhome'), new moodle_url('/my/', array('setdefaulthome' => true)),
-                    navigation_node::TYPE_SETTING);
+            $frontpagenode->add(
+                get_string('makethismyhome'),
+                new moodle_url('/my/', array('setdefaulthome' => true)),
+                navigation_node::TYPE_SETTING
+            );
         }
     }
 }
@@ -151,33 +154,33 @@ if (empty($CFG->forcedefaultmymoodle) && $PAGE->user_allowed_editing()) {
         }
     }
 
-//     // Add button for editing page
-//     $params = array('edit' => !$edit);
+//         // Add button for editing page
+//         $params = array('edit' => !$edit);
 
-//     $resetbutton = '';
-//     $resetstring = get_string('resetpage', 'my');
-//     $reseturl = new moodle_url("$CFG->wwwroot/my/index.php", array('edit' => 1, 'reset' => 1));
+//         $resetbutton = '';
+//         $resetstring = get_string('resetpage', 'my');
+//         $reseturl = new moodle_url("$CFG->wwwroot/my/index.php", array('edit' => 1, 'reset' => 1));
 
-//     if (!$currentpage->userid) {
-//         // viewing a system page -- let the user customise it
-//         $editstring = get_string('updatemymoodleon');
-//         $params['edit'] = 1;
-//     } else if (empty($edit)) {
-//         $editstring = get_string('updatemymoodleon');
+//         if (!$currentpage->userid) {
+//             // viewing a system page -- let the user customise it
+//             $editstring = get_string('updatemymoodleon');
+//             $params['edit'] = 1;
+//         } else if (empty($edit)) {
+//             $editstring = get_string('updatemymoodleon');
+//         } else {
+//             $editstring = get_string('updatemymoodleoff');
+//             $resetbutton = $OUTPUT->single_button($reseturl, $resetstring);
+//         }
+
+//         $url = new moodle_url("$CFG->wwwroot/my/index.php", $params);
+//         $button = '';
+//         if (!$PAGE->theme->haseditswitch) {
+//             $button = $OUTPUT->single_button($url, $editstring);
+//         }
+//         $PAGE->set_button($resetbutton . $button);
+
 //     } else {
-//         $editstring = get_string('updatemymoodleoff');
-//         $resetbutton = $OUTPUT->single_button($reseturl, $resetstring);
-//     }
-
-//     $url = new moodle_url("$CFG->wwwroot/my/index.php", $params);
-//     $button = '';
-//     if (!$PAGE->theme->haseditswitch) {
-//         $button = $OUTPUT->single_button($url, $editstring);
-//     }
-//     $PAGE->set_button($resetbutton . $button);
-
-// } else {
-//     $USER->editing = $edit = 0;
+//         $USER->editing = $edit = 0;
 }
 
 echo $OUTPUT->header();
@@ -192,20 +195,21 @@ $isadmin = is_siteadmin($userid);
 
 if ($isstudent) {
     chartsiswa();
-}
-
-elseif ($isteacher) {
+} elseif ($isteacher) {
     $course_count = get_taught_course_count($userid);
-    $total_students = get_total_role_count(5); 
-    ?>
-    <div class = "col-12">
-        <div class= "row">
+    $total_students = get_total_role_count(5);
+?>
+    <div class="col-12">
+        <div class="row">
             <div class="col-4">
                 <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
-                    <h3>Pelajaran Diampu</h3>
+                    <a href="<?php echo $CFG->wwwroot; ?>/my/courses.php" style="text-decoration: none; color: white;">
+                        <h3>Pelajaran Diampu</h3>
+                    </a>
                     <p><?php echo $course_count; ?> Pelajaran</p>
                 </div>
             </div>
+
 
             <div class="col-4">
                 <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
@@ -215,20 +219,18 @@ elseif ($isteacher) {
             </div>
         </div>
     </div>
-    <?php
+<?php
     chartGuru();
-}
-
-elseif ($isadmin) {
+} elseif ($isadmin) {
 
     $course_count = get_taught_course_count($userid);
-    $total_students = get_total_role_count(5); 
-    $total_teacher = get_total_role_count(3); 
+    $total_students = get_total_role_count(5);
+    $total_teacher = get_total_role_count(3);
     $total_admin = get_total_role_count(1)
-    ?>
+?>
 
-    <div class = "col-12">
-        <div class= "row">
+    <div class="col-12">
+        <div class="row">
             <div class="col-4">
                 <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
                     <h3>Jumlah siswa</h3>
@@ -239,7 +241,7 @@ elseif ($isadmin) {
             <div class="col-4">
                 <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
                     <h3>Jumlah Guru</h3>
-                    <p><?php echo $total_teacher; ?>  </p>
+                    <p><?php echo $total_teacher; ?> </p>
                 </div>
             </div>
 
@@ -251,11 +253,9 @@ elseif ($isadmin) {
             </div>
         </div>
     </div>
-    <?php
+<?php
 
-}
-
-else {
+} else {
     // Tampilkan konten default atau pesan kesalahan
     echo "Role not recognized.";
 }

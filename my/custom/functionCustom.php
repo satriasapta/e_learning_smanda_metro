@@ -233,6 +233,53 @@ function chartGuru()
             echo $OUTPUT->render($chart);
         }
     }
+
+    if ($selected_courseid) {
+        // Mengambil daftar kuis untuk kursus yang dipilih
+        $quizzes_sql = "SELECT id, name FROM {quiz} WHERE course = :courseid ORDER BY name";
+        $quizzes = $DB->get_records_sql($quizzes_sql, ['courseid' => $selected_courseid]);
+
+        echo '<form method="post">';
+        echo '<select name="quizid" style="margin-top: 25px;">';
+        echo '<option value="">Pilih Detail Kuis...</option>';
+        foreach ($quizzes as $quiz) {
+            echo '<option value="' . $quiz->id . '">' . $quiz->name . '</option>';
+        }
+        echo '</select>';
+        echo '<input type="submit" name="showGrades" value="Tampilkan Nilai" style="margin-left: 10px;"/>';
+        echo '</form>';
+    }
+
+    if (!empty($_POST['showGrades']) && !empty($_POST['quizid'])) {
+    $selected_quizid = $_POST['quizid'];
+
+    $gradepass_sql = "SELECT gradepass
+                  FROM {grade_items}
+                  WHERE itemmodule = 'quiz' AND iteminstance = :quizid";
+    $gradepass = $DB->get_field_sql($gradepass_sql, ['quizid' => $selected_quizid]);
+
+
+    // Query untuk mengambil nilai kuis siswa
+    $grades_sql = "SELECT gg.id, CONCAT(u.firstname, ' ', u.lastname) AS fullname, gg.finalgrade
+               FROM {grade_grades} gg
+               JOIN {grade_items} gi ON gi.id = gg.itemid AND gi.itemmodule = 'quiz'
+               JOIN {user} u ON u.id = gg.userid
+               WHERE gi.iteminstance = :quizid AND gg.finalgrade IS NOT NULL AND gg.finalgrade < :gradepass
+               ORDER BY u.lastname, u.firstname";
+    $params = ['quizid' => $selected_quizid, 'gradepass' => $gradepass];
+    $grades = $DB->get_records_sql($grades_sql, $params);
+
+    echo '<table border="1" style="width:100%; margin-top:20px; margin-bottom:20px;">';
+    echo '<tr><th>Nama Siswa</th><th>Nilai</th></tr>';
+    foreach ($grades as $grade) {
+        echo '<tr>';
+        echo '<td>' . $grade->fullname . '</td>';
+        echo '<td>' . round($grade->finalgrade, 2) . '</td>';
+        echo '</tr>';
+    }
+    echo '</table>';
+}
+
 }
 
 ?>
