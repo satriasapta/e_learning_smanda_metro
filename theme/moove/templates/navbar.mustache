@@ -58,9 +58,11 @@
 <nav class="navbar fixed-top navbar-light bg-white navbar-expand shadow" aria-label="{{#str}}sitemenubar, admin{{/str}}">
     <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
         <df-messenger
+        intent="WELCOME"
         chat-title="SmartBot"
         agent-id="1eb4677b-1996-4edf-acb5-4a2bebf5d819"
-        language-code="id">
+        language-code="id"
+        wait-open=true>
         </df-messenger>
 
     <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_moove-drawers-primary">
