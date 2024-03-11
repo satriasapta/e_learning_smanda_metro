@@ -36,7 +36,7 @@
 
 require_once(__DIR__ . '/../config.php');
 require_once($CFG->dirroot . '/my/lib.php');
-require_once($CFG->dirroot . '/my//custom/functionCustom.php');
+require_once($CFG->dirroot . '/my/custom/functionCustom.php');
 
 redirect_if_major_upgrade_required();
 
@@ -194,65 +194,77 @@ $isadmin = is_siteadmin($userid);
 
 if ($isstudent) {
     chartsiswa();
-} elseif ($isteacher) {
+} 
+
+elseif ($isteacher) {
     $course_count = get_taught_course_count($userid);
     $total_students = get_total_role_count(5);
-?>
-    <div class="col-12">
-        <div class="row">
-            <div class="col-4">
-                <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
-                    <a href="<?php echo $CFG->wwwroot; ?>/my/courses.php" style="text-decoration: none; color: white;">
-                        <h3>Pelajaran Diampu</h3>
-                    </a>
-                    <p><?php echo $course_count; ?> Pelajaran</p>
+    ?>
+        <div class="col-12">
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:50;">
+                        <h3>Selamat Datang</h3>
+                        <p>E-Learning SMA Negeri 2 Metro</p>
+                    </div>
                 </div>
-            </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
+                        <a href="<?php echo $CFG->wwwroot; ?>/my/courses.php" style="text-decoration: none; color: white;">
+                            <h3>Pelajaran Diampu</h3>
+                        </a>
+                        <p><?php echo $course_count; ?> Pelajaran</p>
+                    </div>
+                </div>
 
 
-            <div class="col-4">
-                <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
-                    <h3>Total Siswa</h3>
-                    <p><?php echo $total_students; ?> Siswa </p>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
+                        <h3>Total Siswa</h3>
+                        <p><?php echo $total_students; ?> Siswa </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-<?php
+    <?php
     chartGuru();
-} elseif ($isadmin) {
+} 
+
+elseif ($isadmin) {
 
     $course_count = get_taught_course_count($userid);
     $total_students = get_total_role_count(5);
     $total_teacher = get_total_role_count(3);
-    $total_admin = get_total_role_count(1)
-?>
+    $total_admin = get_total_role_count(1);
 
-    <div class="col-12">
-        <div class="row">
-            <div class="col-4">
-                <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
-                    <h3>Jumlah siswa</h3>
-                    <p><?php echo $total_students; ?> </p>
+    ?>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
+                        <h3>Jumlah siswa</h3>
+                        <p><?php echo $total_students; ?> </p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-4">
-                <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
-                    <h3>Jumlah Guru</h3>
-                    <p><?php echo $total_teacher; ?> </p>
+                <div class="col-4">
+                    <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
+                        <h3>Jumlah Guru</h3>
+                        <p><?php echo $total_teacher; ?> </p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-4">
-                <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
-                    <h3>Jumlah Admin</h3>
-                    <p><?php echo $total_admin; ?> </p>
+                <div class="col-4">
+                    <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
+                        <h3>Jumlah Admin</h3>
+                        <p><?php echo $total_admin; ?> </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-<?php
+    <?php
 
 } else {
     // Tampilkan konten default atau pesan kesalahan

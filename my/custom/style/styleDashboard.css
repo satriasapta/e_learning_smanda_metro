@@ -13,7 +13,7 @@
 .dashboard-card-count h3 {
     font-size: 20px; /* Ukuran font untuk angka */
     margin: 0; /* Menghilangkan margin */
-    font-weight: bold; /* Font tebal */
+    font-weight: 100; /* Font tebal */
 }
 
 .dashboard-card-count p {
