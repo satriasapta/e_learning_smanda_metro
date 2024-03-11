@@ -204,14 +204,14 @@ elseif ($isteacher) {
             <div class="row">
 
                 <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:50;">
+                    <div class="dashboard-card-count">
                         <h3>Selamat Datang</h3>
                         <p>E-Learning SMA Negeri 2 Metro</p>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
+                    <div class="dashboard-card-count">
                         <a href="<?php echo $CFG->wwwroot; ?>/my/courses.php" style="text-decoration: none; color: white;">
                             <h3>Pelajaran Diampu</h3>
                         </a>
@@ -221,7 +221,7 @@ elseif ($isteacher) {
 
 
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div class="dashboard-card-count" style="background-color: #0f47ad; font-family:Roboto; font-weight:100;">
+                    <div class="dashboard-card-count">
                         <h3>Total Siswa</h3>
                         <p><?php echo $total_students; ?> Siswa </p>
                     </div>
