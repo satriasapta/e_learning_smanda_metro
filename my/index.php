@@ -212,10 +212,10 @@ elseif ($isteacher) {
 
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div class="dashboard-card-count">
+                        <h3>Pelajaran Diampu</h3>
                         <a href="<?php echo $CFG->wwwroot; ?>/my/courses.php" style="text-decoration: none; color: white;">
-                            <h3>Pelajaran Diampu</h3>
+                            <p><?php echo $course_count; ?> Pelajaran >></p>
                         </a>
-                        <p><?php echo $course_count; ?> Pelajaran</p>
                     </div>
                 </div>
 
