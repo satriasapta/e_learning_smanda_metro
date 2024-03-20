@@ -78,6 +78,15 @@ function theme_moove_get_extra_scss($theme) {
     return !empty($theme->settings->scss) ? $theme->settings->scss . ' ' . $content : $content;
 }
 
+function theme_moove_get_extra_data() {
+    list($teacher_count, $student_count) = get_user_counts();
+
+    return array(
+        'teacher_count' => $teacher_count,
+        'student_count' => $student_count,
+    );
+}
+
 /**
  * Get SCSS to prepend.
  *
