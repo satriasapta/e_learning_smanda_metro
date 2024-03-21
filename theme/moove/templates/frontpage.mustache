@@ -95,73 +95,52 @@
             </div>
         {{/slidercount}}
 
-        {{#displaymarketingbox}}
-            <section id="feature">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 my-3">
-                            <h3 class="h1 mt-3 mb-3">{{{marketingheading}}}</h3>
-                            <div class="marketing-content">{{{marketingcontent}}}</div>
-                        </div>
-                        <div class="col-lg-8 ps-xl-8">
-                            <div class="row">
-                                {{#marketingboxes}}
-                                    <div class="col-sm-6 mt-4">
-                                        <div class="card card-body shadow">
-                                            <div class="d-flex">
-                                                <div class="icon-lg text-white rounded-circle">
-                                                    <img src="{{{icon}}}">
-                                                </div>
-                                                <div class="col ps-3">
-                                                    <h5>{{{heading}}}</h5>
-                                                    <div class="box-content">{{{content}}}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {{/marketingboxes}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        {{/displaymarketingbox}}
-
         {{#numbersfrontpage}}
             <section id="numbers">
                 <div class="moove-container-fluid">
                     <div class="row customer-area-l1 justify-content-center align-items-center ">
-                        <div class="col-xl-5 col-lg-5 col-md-10">
-                            <div class="sectionheading">
-                                {{{numberscontent}}}
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-7 col-md-10 offset-xl-1">
-                            <div class="row user-rating-box-area">
-                                <div class="col-sm-6 col-xs-8">
-                                    <div class="h-100 rate-box bg-primary">
-                                        <h3>
-                                            {{{numbersusers}}}
-                                        </h3>
-                                        <p>{{#str}}numbersusers, theme_moove{{/str}}</p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-xs-8">
-                                    <div class="h-100 rate-box rate-box-2 bg-cloudburst">
-                                        <h3>
-                                            {{{numberscourses}}}
-                                        </h3>
-                                        <p>{{#str}}numberscourses, theme_moove{{/str}}</p>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="sectionheading" >
+                            <h2><center>Motto SMAN 2 Metro</center></h2>
+                            <p style="font-size : 18px; margin-top: 25px;">“Terwujudnya Sekolah Mandiri Berprestasi, Berpegang Teguh Budi Pekerti, Berwawasan Informasi Teknologi.”</p>
                         </div>
                     </div>
                 </div>
+
             </section>
         {{/numbersfrontpage}}
 
-        <div id="topofscroll">
+        {{#numbersfrontpage}}
+            <section id="topofscroll">
+                <div class="moove-container-fluid style="margin-top:30px;">
+                    <div class="row customer-area-l1 justify-content-center align-items-center ">
+                        <div class="sectionheading" >
+                            <h2 style = "margin-top : 30px;"><center>Visi dan Misi</center></h2>
+                            <h3>Visi : </h3>
+                            <p style="font-size : 16px; margin-top: 15px;">“Beriman  dan  bertakwa,  berprestasi,  ramah  lingkungan,  berjiwa nasional, serta berdaya saing internasional”</p>
+
+                            <h3 style="margin-bottom:10px;">Misi : </h3>
+                            <ol style = "font-size:16px;">
+                                <li>Mengembangkan potensi spiritual dan kebiasaan menjalankan ajaran Agama sesuai dengan keyakinan masing-masing.</li>
+                                <li>Mewujudkan sikap dan perilaku toleran terhadap pemeluk agama.</li>
+                                <li>Membiasakan hidup bersih, sehat, teratur dan suka bekerja keras, serta memiliki kecakapan hidup yang dapat dikembangkan dalam kehidupan di masyarakat.</li>
+                                <li>Mewujudkan kebiasaan berkomunikasi yang santun, berbudi pekerti luhur, dan berestetika.</li>
+                                <li>Mengembangkan  potensi  setiap  peserta  didik  melalui  pelayanan  bimbingan konseling, bimbingan IT, kegiatan ekstra kurikuler dan gerakan literasi sekolah.</li>
+                                <li>Mengembangkan   dan   memberdayakan   potensi   setiap   tenaga   pendidik   dan kependidikan.</li>
+                                <li>Mewujudkan penguasaan ilmu pengetahuan dan teknologi yang bermanfaat</li>
+                                <li>Menumbuhkan dan mengembangkan budaya cinta lingkungan.</li>
+                                <li>Menumbuhkan dan mengembangkan etika-moral dan jiwa sosial-kebangsaan yang tinggi</li>
+                                <li>Membangun jejaring atau kerjasama antara sekolah, orang tua, dan masyarakat.</li>
+                                <li>Mewujudkan  lulusan  yang  berkarakter,  berilmu,  dan  berketerampilan  untuk berkompetisi di kancah global.</li>
+                                <li>Mewujudkan pencapaian delapan standar nasional pendidikan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        {{/numbersfrontpage}}
+
+        <div id="numbers">
             <div id="page-content" class="d-print-block main-inner">
                 <div id="region-main-box">
                     <section id="region-main" aria-label="{{#str}}content{{/str}}">

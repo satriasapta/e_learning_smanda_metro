@@ -28,6 +28,31 @@
     input[type="submit"]:hover {
         background-color: #0056b3;
     }
+
+    .custom-select {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        background-color: #f8f8f8;
+        margin-right: 10px;
+    }
+
+    .custom-button {
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 1px solid #007bff;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .custom-button:hover {
+        background-color: #0056b3;
+    }
+
+    .custom-form {
+        margin-top: 30px;
+    }
 </style>
 
 <?php
@@ -168,7 +193,7 @@ function chartGuru()
     $params = ['userid' => $userid];
     $courses = $DB->get_records_sql($sql, $params);
 
-    echo '<h3>Grafik Nilai Kuis dan Ujian</h3>';
+    echo '<h4>Grafik Nilai Kuis dan Ujian</h4>';
 
     // Membuat dropdown mata pelajaran.
     echo '<form method="post" style="margin-top: 30px;">';
@@ -224,12 +249,12 @@ function chartGuru()
         // Mengambil daftar kuis untuk kursus yang dipilih
         $quizzes_sql = "SELECT id, name FROM {quiz} WHERE course = :courseid ORDER BY name";
 
-        echo '<h3>Data Nilai Siswa Tidak Lulus</h3>';
+        echo '<h4>Data Nilai Siswa Tidak Lulus</h4>';
         $quizzes = $DB->get_records_sql($quizzes_sql, ['courseid' => $selected_courseid]);
 
-        echo '<form method="post" style="margin-top: 30px;">';
+        echo '<form method="post" class="custom-form" style="margin-top: 30px;">';
         echo '<input type="hidden" name="courseid" value="' . $selected_courseid . '">';
-        echo '<select name="quizid" >';
+        echo '<select name="quizid" class="custom-select">';
         echo '<option value="">Pilih Detail Kuis...</option>';
         foreach ($quizzes as $quiz) {
             echo '<option value="' . $quiz->id . '">' . $quiz->name . '</option>';
@@ -254,7 +279,7 @@ function chartGuru()
         $params = ['quizid' => $selected_quizid, 'gradepass' => $gradepass];
         $grades = $DB->get_records_sql($grades_sql, $params);
 
-        echo '<table class ="chart-output-htmltable generaltable" style="width:100%; margin-top:20px; margin-bottom:20px;">';
+        echo '<table class ="chart-output-htmltable generaltable" style="width:100%; margin-top:20px; margin-bottom:30px;">';
         echo '<tr><th>Nama Siswa</th><th>Nilai</th></tr>';
         foreach ($grades as $grade) {
             echo '<tr>';
