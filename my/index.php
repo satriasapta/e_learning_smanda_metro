@@ -214,7 +214,7 @@ elseif ($isteacher) {
                     <div class="dashboard-card-count">
                         <h3>Pelajaran Diampu</h3>
                         <a href="<?php echo $CFG->wwwroot; ?>/my/courses.php" style="text-decoration: none; color: white;">
-                            <p><?php echo $course_count; ?> Pelajaran >></p>
+                            <p><?php echo $course_count; ?> Pelajaran </p>
                         </a>
                     </div>
                 </div>

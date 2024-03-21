@@ -207,7 +207,7 @@ function chartGuru()
     echo '</form>';
 
     if ($selected_courseid) {
-        // Query untuk mengambil nilai kuis, grade to pass, dan jumlah siswa.
+        // Query untuk mengambil nilai kuis, nilai kelulusan, dan jumlah siswa.
         $sql = "SELECT gi.itemname, AVG(gg.finalgrade) AS averagegrade, gi.gradepass, COUNT(DISTINCT CASE WHEN gg.finalgrade IS NOT NULL THEN gg.userid END) AS studentcount
                     FROM {grade_items} gi
                     JOIN {grade_grades} gg ON gi.id = gg.itemid
@@ -246,7 +246,7 @@ function chartGuru()
     }
 
     if ($selected_courseid) {
-        // Mengambil daftar kuis untuk kursus yang dipilih
+        // Mengambil daftar kuis untuk pelajaran yang dipilih
         $quizzes_sql = "SELECT id, name FROM {quiz} WHERE course = :courseid ORDER BY name";
 
         echo '<h4>Data Nilai Siswa Tidak Lulus</h4>';
