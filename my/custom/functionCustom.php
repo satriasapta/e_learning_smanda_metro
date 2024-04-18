@@ -251,17 +251,23 @@ function chartGuru()
 
         echo '<h4>Data Nilai Siswa Tidak Lulus</h4>';
         $quizzes = $DB->get_records_sql($quizzes_sql, ['courseid' => $selected_courseid]);
-
+        
         echo '<form method="post" class="custom-form" style="margin-top: 30px;">';
         echo '<input type="hidden" name="courseid" value="' . $selected_courseid . '">';
+        
+        // Mendapatkan quiz ID yang dipilih dari form submit
+        $selected_quizid = isset($_POST['quizid']) ? $_POST['quizid'] : '';
+        
         echo '<select name="quizid" class="custom-select">';
         echo '<option value="">Pilih Detail Kuis...</option>';
         foreach ($quizzes as $quiz) {
-            echo '<option value="' . $quiz->id . '">' . $quiz->name . '</option>';
+            $selected_attribute = ($quiz->id == $selected_quizid) ? ' selected' : '';
+            echo '<option value="' . $quiz->id . '"' . $selected_attribute . '>' . $quiz->name . '</option>';
         }
         echo '</select>';
         echo '<input type="submit" name="showGrades" value="Tampilkan Nilai" style="margin-left: 10px;"/>';
         echo '</form>';
+        
     }
 
     if (!empty($_POST['showGrades']) && !empty($_POST['quizid'])) {
