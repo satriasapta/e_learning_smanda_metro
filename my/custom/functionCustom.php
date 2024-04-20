@@ -142,7 +142,7 @@ function chartsiswa()
             WHERE gi.courseid = :courseid AND gi.itemtype = 'mod' 
             AND (gi.itemmodule = 'assign' OR gi.itemmodule = 'quiz')
             AND gg.userid = :userid
-            ORDER BY gi.timecreated";  // Urutkan berdasarkan itemname
+            ORDER BY gi.timecreated";
         $params = ['courseid' => $selected_courseid, 'userid' => $userid];
 
         // Menjalankan query.
@@ -233,12 +233,62 @@ function chartGuru()
                 $grades_to_pass[] = (float) $data->gradepass;
                 $student_counts[] = $data->studentcount;
             }
+
+            function predict($quiz_averages)
+            {
+                function linearRegression($x, $y)
+                {
+                    $n = count($x);
+                    $meanX = array_sum($x) / $n;
+                    $meanY = array_sum($y) / $n;
+
+                    $numerator = 0;
+                    $denominator = 0;
+                    for ($i = 0; $i < $n; $i++) {
+                        $numerator += ($x[$i] - $meanX) * ($y[$i] - $meanY);
+                        $denominator += pow($x[$i] - $meanX, 2);
+                    }
+                    $m = $numerator / $denominator;
+                    $c = $meanY - $m * $meanX;
+
+                    return [$m, $c];
+                }
+                
+                $nilai = array_filter($quiz_averages, function ($i) {
+                    return $i != 0;
+                });
+                $kuis = range(0, count($nilai) * 10, 10);
+
+                $predicted_series = array_map(function ($value, $index) use ($nilai, $kuis) {
+                    if ($value == 0) {
+                        list($slope, $intercept) = linearRegression($nilai, $kuis);
+                        $res = $slope * ($index * 10) + $intercept;
+                        return $res;
+                    }
+                    return $value;
+                }, $quiz_averages, array_keys($quiz_averages));
+                return $predicted_series;
+            }
+
+            // $quiz_averages = [80, 0, 0, 0, 0, 0];
+            $predicted_series = [];
+            $nilai = array_filter($quiz_averages, function ($i) {
+                return $i != 0;
+            });
+            if (count($nilai) < 2) {
+                $predicted_series = array_fill(0, count($quiz_averages), $quiz_averages[0]);
+            } else {
+                $predicted_series = predict($quiz_averages);
+            }
+
             $grades_series = new \core\chart_series('Rata-rata Nilai Kuis', $quiz_averages);
             $pass_series = new \core\chart_series('Nilai Kelulusan', $grades_to_pass);
+            $predicted_series = new \core\chart_series('Nilai prediksi', $predicted_series);
             $chart = new \core\chart_line();
             $chart->set_title('Grafik Nilai Kuis Siswa');
             $chart->add_series($grades_series);
             $chart->add_series($pass_series);
+            $chart->add_series($predicted_series);
             $chart->set_labels($quiz_names);
 
             echo $OUTPUT->render($chart);
