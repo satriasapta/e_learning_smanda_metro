@@ -253,12 +253,28 @@ function chartGuru()
 
                     return [$m, $c];
                 }
-                
+
                 $nilai = array_filter($quiz_averages, function ($i) {
                     return $i != 0;
                 });
-                $kuis = range(0, count($nilai) * 10, 10);
 
+                //scaling & data normalization
+                // $kuis = range(0, count($nilai) * 10, 10);
+                $kuis = range(0, count($nilai));
+                $kuis = array_map(function ($value) use ($quiz_averages, $nilai) {
+                    $oldMin = 0;
+                    $oldMax = count($quiz_averages);
+
+                    $newMin = 0;
+                    $newMax = max($nilai);
+                    // $newMax = 100;
+                    $newValue = (($value - $oldMin) * ($newMax - $newMin) / ($oldMax - $oldMin)) + $newMin;
+
+                    return $newValue;
+                }, $kuis);
+
+                // print_r($kuis);
+                // prediksi
                 $predicted_series = array_map(function ($value, $index) use ($nilai, $kuis) {
                     if ($value == 0) {
                         list($slope, $intercept) = linearRegression($nilai, $kuis);
@@ -270,7 +286,7 @@ function chartGuru()
                 return $predicted_series;
             }
 
-            // $quiz_averages = [80, 0, 0, 0, 0, 0];
+            // $quiz_averages = [80, 70, 60, 0, 0, 0, 0];
             $predicted_series = [];
             $nilai = array_filter($quiz_averages, function ($i) {
                 return $i != 0;
