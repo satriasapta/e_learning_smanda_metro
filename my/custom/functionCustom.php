@@ -148,7 +148,7 @@ function chartsiswa()
         // Menjalankan query.
         $grades = $DB->get_records_sql($sql, $params);
         if (empty($grades)) {
-            echo '<div style="margin-bottom: 25px; text-align:center;">Tidak ada nilai kuis yang ditemukan untuk kursus ini.</div>';
+            echo '<div style="margin-bottom: 25px; text-align:center;">Tidak ada nilai kuis dan tugas yang ditemukan untuk pelajaran ini.</div>';
         } else {
             // Mengolah data untuk chart...
             $assignment_names = [];
