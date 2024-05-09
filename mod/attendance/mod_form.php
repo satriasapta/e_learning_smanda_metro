@@ -60,16 +60,16 @@ class mod_attendance_mod_form extends moodleform_mod {
         $this->standard_coursemodule_elements(true);
 
         // IP address.
-        if (get_config('attendance', 'subnetactivitylevel')) {
-            $mform->addElement('header', 'security', get_string('extrarestrictions', 'attendance'));
-            $mform->addElement('text', 'subnet', get_string('defaultsubnet', 'attendance'), array('size' => '164'));
-            $mform->setType('subnet', PARAM_TEXT);
-            $mform->addHelpButton('subnet', 'defaultsubnet', 'attendance');
-            $mform->setDefault('subnet', $attendanceconfig->subnet);
-        } else {
-            $mform->addElement('hidden', 'subnet', '');
-            $mform->setType('subnet', PARAM_TEXT);
-        }
+        // if (get_config('attendance', 'subnetactivitylevel')) {
+        //     $mform->addElement('header', 'security', get_string('extrarestrictions', 'attendance'));
+        //     $mform->addElement('text', 'subnet', get_string('defaultsubnet', 'attendance'), array('size' => '164'));
+        //     $mform->setType('subnet', PARAM_TEXT);
+        //     $mform->addHelpButton('subnet', 'defaultsubnet', 'attendance');
+        //     $mform->setDefault('subnet', $attendanceconfig->subnet);
+        // } else {
+        //     $mform->addElement('hidden', 'subnet', '');
+        //     $mform->setType('subnet', PARAM_TEXT);
+        // }
 
         $this->add_action_buttons();
     }
