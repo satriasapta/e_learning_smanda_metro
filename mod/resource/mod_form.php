@@ -25,20 +25,22 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot.'/course/moodleform_mod.php');
-require_once($CFG->dirroot.'/mod/resource/locallib.php');
-require_once($CFG->libdir.'/filelib.php');
+require_once($CFG->dirroot . '/course/moodleform_mod.php');
+require_once($CFG->dirroot . '/mod/resource/locallib.php');
+require_once($CFG->libdir . '/filelib.php');
 
-class mod_resource_mod_form extends moodleform_mod {
-    function definition() {
+class mod_resource_mod_form extends moodleform_mod
+{
+    function definition()
+    {
         global $CFG, $DB;
-        $mform =& $this->_form;
+        $mform = &$this->_form;
 
         $config = get_config('resource');
 
         if ($this->current->instance and $this->current->tobemigrated) {
             // resource not migrated yet
-            $resource_old = $DB->get_record('resource_old', array('oldid'=>$this->current->instance));
+            $resource_old = $DB->get_record('resource_old', array('oldid' => $this->current->instance));
             $mform->addElement('static', 'warning', '', get_string('notmigrated', 'resource', $resource_old->type));
             $mform->addElement('cancel');
             $this->standard_hidden_coursemodule_elements();
@@ -47,7 +49,7 @@ class mod_resource_mod_form extends moodleform_mod {
 
         //-------------------------------------------------------
         $mform->addElement('header', 'general', get_string('general', 'form'));
-        $mform->addElement('text', 'name', get_string('name'), array('size'=>'48'));
+        $mform->addElement('text', 'name', get_string('name'), array('size' => '48'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
@@ -70,8 +72,10 @@ class mod_resource_mod_form extends moodleform_mod {
 
         // add legacy files flag only if used
         if (isset($this->current->legacyfiles) and $this->current->legacyfiles != RESOURCELIB_LEGACYFILES_NO) {
-            $options = array(RESOURCELIB_LEGACYFILES_DONE   => get_string('legacyfilesdone', 'resource'),
-                             RESOURCELIB_LEGACYFILES_ACTIVE => get_string('legacyfilesactive', 'resource'));
+            $options = array(
+                RESOURCELIB_LEGACYFILES_DONE   => get_string('legacyfilesdone', 'resource'),
+                RESOURCELIB_LEGACYFILES_ACTIVE => get_string('legacyfilesactive', 'resource')
+            );
             $mform->addElement('select', 'legacyfiles', get_string('legacyfiles', 'resource'), $options);
         }
 
@@ -106,7 +110,7 @@ class mod_resource_mod_form extends moodleform_mod {
         $mform->addHelpButton('showdate', 'showdate', 'resource');
 
         if (array_key_exists(RESOURCELIB_DISPLAY_POPUP, $options)) {
-            $mform->addElement('text', 'popupwidth', get_string('popupwidth', 'resource'), array('size'=>3));
+            $mform->addElement('text', 'popupwidth', get_string('popupwidth', 'resource'), array('size' => 3));
             if (count($options) > 1) {
                 $mform->hideIf('popupwidth', 'display', 'noteq', RESOURCELIB_DISPLAY_POPUP);
             }
@@ -114,7 +118,7 @@ class mod_resource_mod_form extends moodleform_mod {
             $mform->setDefault('popupwidth', $config->popupwidth);
             $mform->setAdvanced('popupwidth', true);
 
-            $mform->addElement('text', 'popupheight', get_string('popupheight', 'resource'), array('size'=>3));
+            $mform->addElement('text', 'popupheight', get_string('popupheight', 'resource'), array('size' => 3));
             if (count($options) > 1) {
                 $mform->hideIf('popupheight', 'display', 'noteq', RESOURCELIB_DISPLAY_POPUP);
             }
@@ -123,9 +127,11 @@ class mod_resource_mod_form extends moodleform_mod {
             $mform->setAdvanced('popupheight', true);
         }
 
-        if (array_key_exists(RESOURCELIB_DISPLAY_AUTO, $options) or
-          array_key_exists(RESOURCELIB_DISPLAY_EMBED, $options) or
-          array_key_exists(RESOURCELIB_DISPLAY_FRAME, $options)) {
+        if (
+            array_key_exists(RESOURCELIB_DISPLAY_AUTO, $options) or
+            array_key_exists(RESOURCELIB_DISPLAY_EMBED, $options) or
+            array_key_exists(RESOURCELIB_DISPLAY_FRAME, $options)
+        ) {
             $mform->addElement('checkbox', 'printintro', get_string('printintro', 'resource'));
             $mform->hideIf('printintro', 'display', 'eq', RESOURCELIB_DISPLAY_POPUP);
             $mform->hideIf('printintro', 'display', 'eq', RESOURCELIB_DISPLAY_DOWNLOAD);
@@ -135,9 +141,7 @@ class mod_resource_mod_form extends moodleform_mod {
         }
 
         $options = array('0' => get_string('none'), '1' => get_string('allfiles'), '2' => get_string('htmlfilesonly'));
-        $mform->addElement('select', 'filterfiles', get_string('filterfiles', 'resource'), $options);
         $mform->setDefault('filterfiles', $config->filterfiles);
-        $mform->setAdvanced('filterfiles', true);
 
         //-------------------------------------------------------
         $this->standard_coursemodule_elements();
@@ -151,10 +155,11 @@ class mod_resource_mod_form extends moodleform_mod {
         $mform->setDefault('revision', 1);
     }
 
-    function data_preprocessing(&$default_values) {
+    function data_preprocessing(&$default_values)
+    {
         if ($this->current->instance and !$this->current->tobemigrated) {
             $draftitemid = file_get_submitted_draft_itemid('files');
-            file_prepare_draft_area($draftitemid, $this->context->id, 'mod_resource', 'content', 0, array('subdirs'=>true));
+            file_prepare_draft_area($draftitemid, $this->context->id, 'mod_resource', 'content', 0, array('subdirs' => true));
             $default_values['files'] = $draftitemid;
         }
         if (!empty($default_values['displayoptions'])) {
@@ -188,7 +193,8 @@ class mod_resource_mod_form extends moodleform_mod {
         }
     }
 
-    function definition_after_data() {
+    function definition_after_data()
+    {
         if ($this->current->instance and $this->current->tobemigrated) {
             // resource not migrated yet
             return;
@@ -197,7 +203,8 @@ class mod_resource_mod_form extends moodleform_mod {
         parent::definition_after_data();
     }
 
-    function validation($data, $files) {
+    function validation($data, $files)
+    {
         global $USER;
 
         $errors = parent::validation($data, $files);
@@ -211,9 +218,9 @@ class mod_resource_mod_form extends moodleform_mod {
         if (count($files) == 1) {
             // no need to select main file if only one picked
             return $errors;
-        } else if(count($files) > 1) {
+        } else if (count($files) > 1) {
             $mainfile = false;
-            foreach($files as $file) {
+            foreach ($files as $file) {
                 if ($file->get_sortorder() == 1) {
                     $mainfile = true;
                     break;
@@ -222,8 +229,15 @@ class mod_resource_mod_form extends moodleform_mod {
             // set a default main file
             if (!$mainfile) {
                 $file = reset($files);
-                file_set_sortorder($file->get_contextid(), $file->get_component(), $file->get_filearea(), $file->get_itemid(),
-                                   $file->get_filepath(), $file->get_filename(), 1);
+                file_set_sortorder(
+                    $file->get_contextid(),
+                    $file->get_component(),
+                    $file->get_filearea(),
+                    $file->get_itemid(),
+                    $file->get_filepath(),
+                    $file->get_filename(),
+                    1
+                );
             }
         }
         return $errors;

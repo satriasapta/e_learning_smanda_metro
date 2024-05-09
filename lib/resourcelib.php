@@ -59,7 +59,8 @@ define('RESOURCELIB_LEGACYFILES_ACTIVE', 2);
  * @param int $itemid migrated file item id
  * @return mixed, false if not found, stored_file instance if migrated to new area
  */
-function resourcelib_try_file_migration($filepath, $cmid, $courseid, $component, $filearea, $itemid) {
+function resourcelib_try_file_migration($filepath, $cmid, $courseid, $component, $filearea, $itemid)
+{
     $fs = get_file_storage();
 
     if (stripos($filepath, '/backupdata/') === 0 or stripos($filepath, '/moddata/') === 0) {
@@ -74,7 +75,7 @@ function resourcelib_try_file_migration($filepath, $cmid, $courseid, $component,
         return false;
     }
 
-    $fullpath = rtrim("/$coursecontext->id/course/legacy/0".$filepath, '/');
+    $fullpath = rtrim("/$coursecontext->id/course/legacy/0" . $filepath, '/');
     do {
         if (!$file = $fs->get_file_by_hash(sha1($fullpath))) {
             if ($file = $fs->get_file_by_hash(sha1("$fullpath/.")) and $file->is_directory()) {
@@ -93,7 +94,7 @@ function resourcelib_try_file_migration($filepath, $cmid, $courseid, $component,
     } while (false);
 
     // copy and keep the same path, name, etc.
-    $file_record = array('contextid'=>$context->id, 'component'=>$component, 'filearea'=>$filearea, 'itemid'=>$itemid);
+    $file_record = array('contextid' => $context->id, 'component' => $component, 'filearea' => $filearea, 'itemid' => $itemid);
     try {
         return $fs->create_file_from_storedfile($file_record, $file);
     } catch (Exception $e) {
@@ -108,22 +109,21 @@ function resourcelib_try_file_migration($filepath, $cmid, $courseid, $component,
  * @param int $current current display options for existing instances
  * @return array of key=>name pairs
  */
-function resourcelib_get_displayoptions(array $enabled, $current=null) {
+function resourcelib_get_displayoptions(array $enabled, $current = null)
+{
     if (is_number($current)) {
         $enabled[] = $current;
     }
 
-    $options = array(RESOURCELIB_DISPLAY_AUTO     => get_string('resourcedisplayauto'),
-                     RESOURCELIB_DISPLAY_EMBED    => get_string('resourcedisplayembed'),
-                     RESOURCELIB_DISPLAY_FRAME    => get_string('resourcedisplayframe'),
-                     RESOURCELIB_DISPLAY_NEW      => get_string('resourcedisplaynew'),
-                     RESOURCELIB_DISPLAY_DOWNLOAD => get_string('resourcedisplaydownload'),
-                     RESOURCELIB_DISPLAY_OPEN     => get_string('resourcedisplayopen'),
-                     RESOURCELIB_DISPLAY_POPUP    => get_string('resourcedisplaypopup'));
+    $options = array(
+        RESOURCELIB_DISPLAY_AUTO     => get_string('resourcedisplayauto'),
+        RESOURCELIB_DISPLAY_FRAME    => get_string('resourcedisplayframe'),
+        RESOURCELIB_DISPLAY_NEW      => get_string('resourcedisplaynew'),
+    );
 
     $result = array();
 
-    foreach ($options as $key=>$value) {
+    foreach ($options as $key => $value) {
         if (in_array($key, $enabled)) {
             $result[$key] = $value;
         }
@@ -142,7 +142,8 @@ function resourcelib_get_displayoptions(array $enabled, $current=null) {
  * @param string $fullurl
  * @return string mimetype
  */
-function resourcelib_guess_url_mimetype($fullurl) {
+function resourcelib_guess_url_mimetype($fullurl)
+{
     global $CFG;
     require_once("$CFG->libdir/filelib.php");
 
@@ -153,7 +154,7 @@ function resourcelib_guess_url_mimetype($fullurl) {
     $matches = null;
     if (preg_match("|^(.*)/[a-z]*file.php(\?file=)?(/[^&\?#]*)|", $fullurl, $matches)) {
         // remove the special moodle file serving hacks so that the *file.php is ignored
-        $fullurl = $matches[1].$matches[3];
+        $fullurl = $matches[1] . $matches[3];
     }
 
     if (preg_match("|^(.*)#.*|", $fullurl, $matches)) {
@@ -161,18 +162,15 @@ function resourcelib_guess_url_mimetype($fullurl) {
         $fullurl = $matches[1];
     }
 
-    if (strpos($fullurl, '.php')){
+    if (strpos($fullurl, '.php')) {
         // we do not really know what is in general php script
         return 'text/html';
-
     } else if (substr($fullurl, -1) === '/') {
         // directory index (http://example.com/smaples/)
         return 'text/html';
-
     } else if (strpos($fullurl, '//') !== false and substr_count($fullurl, '/') == 2) {
         // just a host name (http://example.com), solves Australian servers "audio" problem too
         return 'text/html';
-
     } else {
         // ok, this finally looks like a real file
         $parts = explode('?', $fullurl);
@@ -187,7 +185,8 @@ function resourcelib_guess_url_mimetype($fullurl) {
  * @param string $fullurl
  * @return string file extension
  */
-function resourcelib_get_extension($fullurl) {
+function resourcelib_get_extension($fullurl)
+{
 
     if ($fullurl instanceof moodle_url) {
         $fullurl = $fullurl->out(false);
@@ -196,7 +195,7 @@ function resourcelib_get_extension($fullurl) {
     $matches = null;
     if (preg_match("|^(.*)/[a-z]*file.php(\?file=)?(/.*)|", $fullurl, $matches)) {
         // remove the special moodle file serving hacks so that the *file.php is ignored
-        $fullurl = $matches[1].$matches[3];
+        $fullurl = $matches[1] . $matches[3];
     }
 
     $matches = null;
@@ -213,10 +212,11 @@ function resourcelib_get_extension($fullurl) {
  * @param string $title
  * @return string html
  */
-function resourcelib_embed_image($fullurl, $title) {
+function resourcelib_embed_image($fullurl, $title)
+{
     $code = '';
     $code .= '<div class="resourcecontent resourceimg">';
-    $code .= "<img title=\"".s(strip_tags(format_string($title)))."\" class=\"resourceimage\" src=\"$fullurl\" alt=\"\" />";
+    $code .= "<img title=\"" . s(strip_tags(format_string($title))) . "\" class=\"resourceimage\" src=\"$fullurl\" alt=\"\" />";
     $code .= '</div>';
 
     return $code;
@@ -229,7 +229,8 @@ function resourcelib_embed_image($fullurl, $title) {
  * @param string $clicktoopen
  * @return string html
  */
-function resourcelib_embed_pdf($fullurl, $title, $clicktoopen) {
+function resourcelib_embed_pdf($fullurl, $title, $clicktoopen)
+{
     global $CFG, $PAGE;
 
     $code = <<<EOT
@@ -255,7 +256,8 @@ EOT;
  * @param string $mimetype
  * @return string html
  */
-function resourcelib_embed_general($fullurl, $title, $clicktoopen, $mimetype) {
+function resourcelib_embed_general($fullurl, $title, $clicktoopen, $mimetype)
+{
     global $CFG, $PAGE;
 
     if ($fullurl instanceof moodle_url) {
