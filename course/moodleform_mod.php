@@ -666,7 +666,7 @@ abstract class moodleform_mod extends moodleform
         }
 
         if ($this->_features->idnumber) {
-            $mform->addElement('text', 'cmidnumber', get_string('idnumbermod'));
+            // $mform->addElement('text', 'cmidnumber', get_string('idnumbermod'));
             $mform->setType('cmidnumber', PARAM_RAW);
             $mform->addHelpButton('cmidnumber', 'idnumbermod');
         }
@@ -675,7 +675,7 @@ abstract class moodleform_mod extends moodleform
             $languages = ['' => get_string('forceno')];
             $languages += get_string_manager()->get_list_of_translations();
 
-            $mform->addElement('select', 'lang', get_string('forcelanguage'), $languages);
+            // $mform->addElement('select', 'lang', get_string('forcelanguage'), $languages);
         }
 
         if ($CFG->downloadcoursecontentallowed) {

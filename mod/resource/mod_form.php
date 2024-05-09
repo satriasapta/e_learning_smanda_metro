@@ -99,40 +99,40 @@ class mod_resource_mod_form extends moodleform_mod
             $mform->addHelpButton('display', 'displayselect', 'resource');
         }
 
-        $mform->addElement('checkbox', 'showsize', get_string('showsize', 'resource'));
-        $mform->setDefault('showsize', $config->showsize);
-        $mform->addHelpButton('showsize', 'showsize', 'resource');
-        $mform->addElement('checkbox', 'showtype', get_string('showtype', 'resource'));
-        $mform->setDefault('showtype', $config->showtype);
-        $mform->addHelpButton('showtype', 'showtype', 'resource');
-        $mform->addElement('checkbox', 'showdate', get_string('showdate', 'resource'));
-        $mform->setDefault('showdate', $config->showdate);
-        $mform->addHelpButton('showdate', 'showdate', 'resource');
+        // // $mform->addElement('checkbox', 'showsize', get_string('showsize', 'resource'));
+        // $mform->setDefault('showsize', $config->showsize);
+        // $mform->addHelpButton('showsize', 'showsize', 'resource');
+        // // $mform->addElement('checkbox', 'showtype', get_string('showtype', 'resource'));
+        // $mform->setDefault('showtype', $config->showtype);
+        // $mform->addHelpButton('showtype', 'showtype', 'resource');
+        // // $mform->addElement('checkbox', 'showdate', get_string('showdate', 'resource'));
+        // $mform->setDefault('showdate', $config->showdate);
+        // $mform->addHelpButton('showdate', 'showdate', 'resource');
 
-        if (array_key_exists(RESOURCELIB_DISPLAY_POPUP, $options)) {
-            $mform->addElement('text', 'popupwidth', get_string('popupwidth', 'resource'), array('size' => 3));
-            if (count($options) > 1) {
-                $mform->hideIf('popupwidth', 'display', 'noteq', RESOURCELIB_DISPLAY_POPUP);
-            }
-            $mform->setType('popupwidth', PARAM_INT);
-            $mform->setDefault('popupwidth', $config->popupwidth);
-            $mform->setAdvanced('popupwidth', true);
+        // if (array_key_exists(RESOURCELIB_DISPLAY_POPUP, $options)) {
+        //     $mform->addElement('text', 'popupwidth', get_string('popupwidth', 'resource'), array('size' => 3));
+        //     if (count($options) > 1) {
+        //         $mform->hideIf('popupwidth', 'display', 'noteq', RESOURCELIB_DISPLAY_POPUP);
+        //     }
+        //     $mform->setType('popupwidth', PARAM_INT);
+        //     $mform->setDefault('popupwidth', $config->popupwidth);
+        //     $mform->setAdvanced('popupwidth', true);
 
-            $mform->addElement('text', 'popupheight', get_string('popupheight', 'resource'), array('size' => 3));
-            if (count($options) > 1) {
-                $mform->hideIf('popupheight', 'display', 'noteq', RESOURCELIB_DISPLAY_POPUP);
-            }
-            $mform->setType('popupheight', PARAM_INT);
-            $mform->setDefault('popupheight', $config->popupheight);
-            $mform->setAdvanced('popupheight', true);
-        }
+        //     $mform->addElement('text', 'popupheight', get_string('popupheight', 'resource'), array('size' => 3));
+        //     if (count($options) > 1) {
+        //         $mform->hideIf('popupheight', 'display', 'noteq', RESOURCELIB_DISPLAY_POPUP);
+        //     }
+        //     $mform->setType('popupheight', PARAM_INT);
+        //     $mform->setDefault('popupheight', $config->popupheight);
+        //     $mform->setAdvanced('popupheight', true);
+        // }
 
         if (
             array_key_exists(RESOURCELIB_DISPLAY_AUTO, $options) or
             array_key_exists(RESOURCELIB_DISPLAY_EMBED, $options) or
             array_key_exists(RESOURCELIB_DISPLAY_FRAME, $options)
         ) {
-            $mform->addElement('checkbox', 'printintro', get_string('printintro', 'resource'));
+            // $mform->addElement('checkbox', 'printintro', get_string('printintro', 'resource'));
             $mform->hideIf('printintro', 'display', 'eq', RESOURCELIB_DISPLAY_POPUP);
             $mform->hideIf('printintro', 'display', 'eq', RESOURCELIB_DISPLAY_DOWNLOAD);
             $mform->hideIf('printintro', 'display', 'eq', RESOURCELIB_DISPLAY_OPEN);
