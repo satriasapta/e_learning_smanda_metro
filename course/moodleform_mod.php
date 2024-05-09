@@ -965,19 +965,19 @@ abstract class moodleform_mod extends moodleform
 
         $mform->addElement('header', 'modstandardratings', get_string('ratings', 'rating'));
 
-        $isupdate = !empty($this->_cm);
+        // $isupdate = !empty($this->_cm);
 
-        $rolenamestring = null;
-        if ($isupdate) {
-            $capabilities = ['moodle/rating:rate', "mod/{$this->_cm->modname}:rate"];
-            $rolenames = get_role_names_with_caps_in_context($this->get_context(), $capabilities);
-            $rolenamestring = implode(', ', $rolenames);
-        } else {
-            $rolenamestring = get_string('capabilitychecknotavailable', 'rating');
-        }
+        // $rolenamestring = null;
+        // if ($isupdate) {
+        //     $capabilities = ['moodle/rating:rate', "mod/{$this->_cm->modname}:rate"];
+        //     $rolenames = get_role_names_with_caps_in_context($this->get_context(), $capabilities);
+        //     $rolenamestring = implode(', ', $rolenames);
+        // } else {
+        //     $rolenamestring = get_string('capabilitychecknotavailable', 'rating');
+        // }
 
-        $mform->addElement('static', 'rolewarning', get_string('rolewarning', 'rating'), $rolenamestring);
-        $mform->addHelpButton('rolewarning', 'rolewarning', 'rating');
+        // $mform->addElement('static', 'rolewarning', get_string('rolewarning', 'rating'), $rolenamestring);
+        // $mform->addHelpButton('rolewarning', 'rolewarning', 'rating');
 
         $mform->addElement('select', $assessedfieldname, get_string('aggregatetype', 'rating'), $rm->get_aggregate_types());
         $mform->setDefault($assessedfieldname, 0);

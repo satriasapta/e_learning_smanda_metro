@@ -5425,10 +5425,11 @@ function forum_get_layout_modes(bool $useexperimentalui = false) {
  */
 function forum_get_forum_types() {
     return array ('general'  => get_string('generalforum', 'forum'),
-                  'eachuser' => get_string('eachuserforum', 'forum'),
-                  'single'   => get_string('singleforum', 'forum'),
-                  'qanda'    => get_string('qandaforum', 'forum'),
-                  'blog'     => get_string('blogforum', 'forum'));
+                //   'eachuser' => get_string('eachuserforum', 'forum'),
+                //   'single'   => get_string('singleforum', 'forum'),
+                //   'qanda'    => get_string('qandaforum', 'forum'),
+                //   'blog'     => get_string('blogforum', 'forum')
+                );
 }
 
 /**
@@ -5437,13 +5438,14 @@ function forum_get_forum_types() {
  * @return array
  */
 function forum_get_forum_types_all() {
-    return array ('news'     => get_string('namenews','forum'),
+    return array (
                   'social'   => get_string('namesocial','forum'),
                   'general'  => get_string('generalforum', 'forum'),
                   'eachuser' => get_string('eachuserforum', 'forum'),
                   'single'   => get_string('singleforum', 'forum'),
                   'qanda'    => get_string('qandaforum', 'forum'),
-                  'blog'     => get_string('blogforum', 'forum'));
+                  'blog'     => get_string('blogforum', 'forum')
+            );
 }
 
 /**

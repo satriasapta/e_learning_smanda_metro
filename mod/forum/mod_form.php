@@ -56,75 +56,75 @@ class mod_forum_mod_form extends moodleform_mod {
         $mform->addHelpButton('type', 'forumtype', 'forum');
         $mform->setDefault('type', 'general');
 
-        $mform->addElement('header', 'availability', get_string('availability', 'forum'));
+        // $mform->addElement('header', 'availability', get_string('availability', 'forum'));
 
-        $name = get_string('duedate', 'forum');
-        $mform->addElement('date_time_selector', 'duedate', $name, array('optional' => true));
-        $mform->addHelpButton('duedate', 'duedate', 'forum');
+        // $name = get_string('duedate', 'forum');
+        // $mform->addElement('date_time_selector', 'duedate', $name, array('optional' => true));
+        // $mform->addHelpButton('duedate', 'duedate', 'forum');
 
-        $name = get_string('cutoffdate', 'forum');
-        $mform->addElement('date_time_selector', 'cutoffdate', $name, array('optional' => true));
-        $mform->addHelpButton('cutoffdate', 'cutoffdate', 'forum');
+        // $name = get_string('cutoffdate', 'forum');
+        // $mform->addElement('date_time_selector', 'cutoffdate', $name, array('optional' => true));
+        // $mform->addHelpButton('cutoffdate', 'cutoffdate', 'forum');
 
         // Attachments and word count.
-        $mform->addElement('header', 'attachmentswordcounthdr', get_string('attachmentswordcount', 'forum'));
+        // $mform->addElement('header', 'attachmentswordcounthdr', get_string('attachmentswordcount', 'forum'));
 
-        $choices = get_max_upload_sizes($CFG->maxbytes, $COURSE->maxbytes, 0, $CFG->forum_maxbytes);
-        $choices[1] = get_string('uploadnotallowed');
-        $mform->addElement('select', 'maxbytes', get_string('maxattachmentsize', 'forum'), $choices);
-        $mform->addHelpButton('maxbytes', 'maxattachmentsize', 'forum');
-        $mform->setDefault('maxbytes', $CFG->forum_maxbytes);
+        // $choices = get_max_upload_sizes($CFG->maxbytes, $COURSE->maxbytes, 0, $CFG->forum_maxbytes);
+        // $choices[1] = get_string('uploadnotallowed');
+        // $mform->addElement('select', 'maxbytes', get_string('maxattachmentsize', 'forum'), $choices);
+        // $mform->addHelpButton('maxbytes', 'maxattachmentsize', 'forum');
+        // $mform->setDefault('maxbytes', $CFG->forum_maxbytes);
 
-        $choices = array(
-            0 => 0,
-            1 => 1,
-            2 => 2,
-            3 => 3,
-            4 => 4,
-            5 => 5,
-            6 => 6,
-            7 => 7,
-            8 => 8,
-            9 => 9,
-            10 => 10,
-            20 => 20,
-            50 => 50,
-            100 => 100
-        );
-        $mform->addElement('select', 'maxattachments', get_string('maxattachments', 'forum'), $choices);
-        $mform->addHelpButton('maxattachments', 'maxattachments', 'forum');
-        $mform->setDefault('maxattachments', $CFG->forum_maxattachments);
+        // $choices = array(
+        //     0 => 0,
+        //     1 => 1,
+        //     2 => 2,
+        //     3 => 3,
+        //     4 => 4,
+        //     5 => 5,
+        //     6 => 6,
+        //     7 => 7,
+        //     8 => 8,
+        //     9 => 9,
+        //     10 => 10,
+        //     20 => 20,
+        //     50 => 50,
+        //     100 => 100
+        // );
+        // $mform->addElement('select', 'maxattachments', get_string('maxattachments', 'forum'), $choices);
+        // $mform->addHelpButton('maxattachments', 'maxattachments', 'forum');
+        // $mform->setDefault('maxattachments', $CFG->forum_maxattachments);
 
-        $mform->addElement('selectyesno', 'displaywordcount', get_string('displaywordcount', 'forum'));
-        $mform->addHelpButton('displaywordcount', 'displaywordcount', 'forum');
-        $mform->setDefault('displaywordcount', 0);
+        // $mform->addElement('selectyesno', 'displaywordcount', get_string('displaywordcount', 'forum'));
+        // $mform->addHelpButton('displaywordcount', 'displaywordcount', 'forum');
+        // $mform->setDefault('displaywordcount', 0);
 
         // Subscription and tracking.
-        $mform->addElement('header', 'subscriptionandtrackinghdr', get_string('subscriptionandtracking', 'forum'));
+        // $mform->addElement('header', 'subscriptionandtrackinghdr', get_string('subscriptionandtracking', 'forum'));
 
-        $options = forum_get_subscriptionmode_options();
-        $mform->addElement('select', 'forcesubscribe', get_string('subscriptionmode', 'forum'), $options);
-        $mform->addHelpButton('forcesubscribe', 'subscriptionmode', 'forum');
-        if (isset($CFG->forum_subscription)) {
-            $defaultforumsubscription = $CFG->forum_subscription;
-        } else {
-            $defaultforumsubscription = FORUM_CHOOSESUBSCRIBE;
-        }
-        $mform->setDefault('forcesubscribe', $defaultforumsubscription);
+        // $options = forum_get_subscriptionmode_options();
+        // $mform->addElement('select', 'forcesubscribe', get_string('subscriptionmode', 'forum'), $options);
+        // $mform->addHelpButton('forcesubscribe', 'subscriptionmode', 'forum');
+        // if (isset($CFG->forum_subscription)) {
+        //     $defaultforumsubscription = $CFG->forum_subscription;
+        // } else {
+        //     $defaultforumsubscription = FORUM_CHOOSESUBSCRIBE;
+        // }
+        // $mform->setDefault('forcesubscribe', $defaultforumsubscription);
 
-        $options = array();
-        $options[FORUM_TRACKING_OPTIONAL] = get_string('trackingoptional', 'forum');
-        $options[FORUM_TRACKING_OFF] = get_string('trackingoff', 'forum');
-        if ($CFG->forum_allowforcedreadtracking) {
-            $options[FORUM_TRACKING_FORCED] = get_string('trackingon', 'forum');
-        }
-        $mform->addElement('select', 'trackingtype', get_string('trackingtype', 'forum'), $options);
-        $mform->addHelpButton('trackingtype', 'trackingtype', 'forum');
-        $default = $CFG->forum_trackingtype;
-        if ((!$CFG->forum_allowforcedreadtracking) && ($default == FORUM_TRACKING_FORCED)) {
-            $default = FORUM_TRACKING_OPTIONAL;
-        }
-        $mform->setDefault('trackingtype', $default);
+        // $options = array();
+        // $options[FORUM_TRACKING_OPTIONAL] = get_string('trackingoptional', 'forum');
+        // $options[FORUM_TRACKING_OFF] = get_string('trackingoff', 'forum');
+        // if ($CFG->forum_allowforcedreadtracking) {
+        //     $options[FORUM_TRACKING_FORCED] = get_string('trackingon', 'forum');
+        // }
+        // $mform->addElement('select', 'trackingtype', get_string('trackingtype', 'forum'), $options);
+        // $mform->addHelpButton('trackingtype', 'trackingtype', 'forum');
+        // $default = $CFG->forum_trackingtype;
+        // if ((!$CFG->forum_allowforcedreadtracking) && ($default == FORUM_TRACKING_FORCED)) {
+        //     $default = FORUM_TRACKING_OPTIONAL;
+        // }
+        // $mform->setDefault('trackingtype', $default);
 
         if ($CFG->enablerssfeeds && isset($CFG->forum_enablerssfeeds) && $CFG->forum_enablerssfeeds) {
 //-------------------------------------------------------------------------------
@@ -161,58 +161,58 @@ class mod_forum_mod_form extends moodleform_mod {
             }
         }
 
-        $mform->addElement('header', 'discussionlocking', get_string('discussionlockingheader', 'forum'));
-        $options = [
-            0               => get_string('discussionlockingdisabled', 'forum'),
-            1   * DAYSECS   => get_string('numday', 'core', 1),
-            1   * WEEKSECS  => get_string('numweek', 'core', 1),
-            2   * WEEKSECS  => get_string('numweeks', 'core', 2),
-            30  * DAYSECS   => get_string('nummonth', 'core', 1),
-            60  * DAYSECS   => get_string('nummonths', 'core', 2),
-            90  * DAYSECS   => get_string('nummonths', 'core', 3),
-            180 * DAYSECS   => get_string('nummonths', 'core', 6),
-            1   * YEARSECS  => get_string('numyear', 'core', 1),
-        ];
-        $mform->addElement('select', 'lockdiscussionafter', get_string('lockdiscussionafter', 'forum'), $options);
-        $mform->addHelpButton('lockdiscussionafter', 'lockdiscussionafter', 'forum');
-        $mform->disabledIf('lockdiscussionafter', 'type', 'eq', 'single');
+        // $mform->addElement('header', 'discussionlocking', get_string('discussionlockingheader', 'forum'));
+        // $options = [
+        //     0               => get_string('discussionlockingdisabled', 'forum'),
+        //     1   * DAYSECS   => get_string('numday', 'core', 1),
+        //     1   * WEEKSECS  => get_string('numweek', 'core', 1),
+        //     2   * WEEKSECS  => get_string('numweeks', 'core', 2),
+        //     30  * DAYSECS   => get_string('nummonth', 'core', 1),
+        //     60  * DAYSECS   => get_string('nummonths', 'core', 2),
+        //     90  * DAYSECS   => get_string('nummonths', 'core', 3),
+        //     180 * DAYSECS   => get_string('nummonths', 'core', 6),
+        //     1   * YEARSECS  => get_string('numyear', 'core', 1),
+        // ];
+        // $mform->addElement('select', 'lockdiscussionafter', get_string('lockdiscussionafter', 'forum'), $options);
+        // $mform->addHelpButton('lockdiscussionafter', 'lockdiscussionafter', 'forum');
+        // $mform->disabledIf('lockdiscussionafter', 'type', 'eq', 'single');
 
 //-------------------------------------------------------------------------------
-        $mform->addElement('header', 'blockafterheader', get_string('blockafter', 'forum'));
-        $options = array();
-        $options[0] = get_string('blockperioddisabled','forum');
-        $options[60*60*24]   = '1 '.get_string('day');
-        $options[60*60*24*2] = '2 '.get_string('days');
-        $options[60*60*24*3] = '3 '.get_string('days');
-        $options[60*60*24*4] = '4 '.get_string('days');
-        $options[60*60*24*5] = '5 '.get_string('days');
-        $options[60*60*24*6] = '6 '.get_string('days');
-        $options[60*60*24*7] = '1 '.get_string('week');
-        $mform->addElement('select', 'blockperiod', get_string('blockperiod', 'forum'), $options);
-        $mform->addHelpButton('blockperiod', 'blockperiod', 'forum');
+        // $mform->addElement('header', 'blockafterheader', get_string('blockafter', 'forum'));
+        // $options = array();
+        // $options[0] = get_string('blockperioddisabled','forum');
+        // $options[60*60*24]   = '1 '.get_string('day');
+        // $options[60*60*24*2] = '2 '.get_string('days');
+        // $options[60*60*24*3] = '3 '.get_string('days');
+        // $options[60*60*24*4] = '4 '.get_string('days');
+        // $options[60*60*24*5] = '5 '.get_string('days');
+        // $options[60*60*24*6] = '6 '.get_string('days');
+        // $options[60*60*24*7] = '1 '.get_string('week');
+        // $mform->addElement('select', 'blockperiod', get_string('blockperiod', 'forum'), $options);
+        // $mform->addHelpButton('blockperiod', 'blockperiod', 'forum');
 
-        $mform->addElement('text', 'blockafter', get_string('blockafter', 'forum'));
-        $mform->setType('blockafter', PARAM_INT);
-        $mform->setDefault('blockafter', '0');
-        $mform->addRule('blockafter', null, 'numeric', null, 'client');
-        $mform->addHelpButton('blockafter', 'blockafter', 'forum');
-        $mform->hideIf('blockafter', 'blockperiod', 'eq', 0);
+        // $mform->addElement('text', 'blockafter', get_string('blockafter', 'forum'));
+        // $mform->setType('blockafter', PARAM_INT);
+        // $mform->setDefault('blockafter', '0');
+        // $mform->addRule('blockafter', null, 'numeric', null, 'client');
+        // $mform->addHelpButton('blockafter', 'blockafter', 'forum');
+        // $mform->hideIf('blockafter', 'blockperiod', 'eq', 0);
 
-        $mform->addElement('text', 'warnafter', get_string('warnafter', 'forum'));
-        $mform->setType('warnafter', PARAM_INT);
-        $mform->setDefault('warnafter', '0');
-        $mform->addRule('warnafter', null, 'numeric', null, 'client');
-        $mform->addHelpButton('warnafter', 'warnafter', 'forum');
-        $mform->hideIf('warnafter', 'blockperiod', 'eq', 0);
+        // $mform->addElement('text', 'warnafter', get_string('warnafter', 'forum'));
+        // $mform->setType('warnafter', PARAM_INT);
+        // $mform->setDefault('warnafter', '0');
+        // $mform->addRule('warnafter', null, 'numeric', null, 'client');
+        // $mform->addHelpButton('warnafter', 'warnafter', 'forum');
+        // $mform->hideIf('warnafter', 'blockperiod', 'eq', 0);
 
-        $coursecontext = context_course::instance($COURSE->id);
-        // To be removed (deprecated) with MDL-67526.
-        plagiarism_get_form_elements_module($mform, $coursecontext, 'mod_forum');
+        // $coursecontext = context_course::instance($COURSE->id);
+        // // To be removed (deprecated) with MDL-67526.
+        // plagiarism_get_form_elements_module($mform, $coursecontext, 'mod_forum');
 
 //-------------------------------------------------------------------------------
 
         // Add the whole forum grading options.
-        $this->add_forum_grade_settings($mform, 'forum');
+        // $this->add_forum_grade_settings($mform, 'forum');
 
         $this->standard_coursemodule_elements();
 //-------------------------------------------------------------------------------
