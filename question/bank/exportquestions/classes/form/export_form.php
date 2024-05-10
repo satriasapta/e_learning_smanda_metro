@@ -73,21 +73,21 @@ class export_form extends moodleform {
         $mform->addGroup($radioarray, "formatchoices", '', $separators, false);
         $mform->addRule("formatchoices", null, 'required', null, 'client');
 
-        // Export options.
-        $mform->addElement('header', 'general', get_string('general', 'form'));
+        // // Export options.
+        // $mform->addElement('header', 'general', get_string('general', 'form'));
 
-        $mform->addElement('questioncategory', 'category', get_string('exportcategory', 'question'),
-                ['contexts' => $contexts, 'top' => true]);
-        $mform->setDefault('category', $defaultcategory);
-        $mform->addHelpButton('category', 'exportcategory', 'question');
+        // $mform->addElement('questioncategory', 'category', get_string('exportcategory', 'question'),
+        //         ['contexts' => $contexts, 'top' => true]);
+        // $mform->setDefault('category', $defaultcategory);
+        // $mform->addHelpButton('category', 'exportcategory', 'question');
 
-        $categorygroup = [];
-        $categorygroup[] = $mform->createElement('checkbox', 'cattofile', '', get_string('tofilecategory', 'question'));
-        $categorygroup[] = $mform->createElement('checkbox', 'contexttofile', '', get_string('tofilecontext', 'question'));
-        $mform->addGroup($categorygroup, 'categorygroup', '', '', false);
-        $mform->disabledIf('categorygroup', 'cattofile', 'notchecked');
-        $mform->setDefault('cattofile', 1);
-        $mform->setDefault('contexttofile', 1);
+        // $categorygroup = [];
+        // $categorygroup[] = $mform->createElement('checkbox', 'cattofile', '', get_string('tofilecategory', 'question'));
+        // $categorygroup[] = $mform->createElement('checkbox', 'contexttofile', '', get_string('tofilecontext', 'question'));
+        // $mform->addGroup($categorygroup, 'categorygroup', '', '', false);
+        // $mform->disabledIf('categorygroup', 'cattofile', 'notchecked');
+        // $mform->setDefault('cattofile', 1);
+        // $mform->setDefault('contexttofile', 1);
 
         // Set a template for the format select elements.
         $renderer = $mform->defaultRenderer();
