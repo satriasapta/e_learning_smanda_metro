@@ -48,12 +48,12 @@ class mod_chat_mod_form extends moodleform_mod {
 
         $mform->addElement('date_time_selector', 'chattime', get_string('chattime', 'chat'));
 
-        $options = array();
-        $options[0]  = get_string('donotusechattime', 'chat');
-        $options[1]  = get_string('repeatnone', 'chat');
-        $options[2]  = get_string('repeatdaily', 'chat');
-        $options[3]  = get_string('repeatweekly', 'chat');
-        $mform->addElement('select', 'schedule', get_string('repeattimes', 'chat'), $options);
+        // $options = array();
+        // $options[0]  = get_string('donotusechattime', 'chat');
+        // $options[1]  = get_string('repeatnone', 'chat');
+        // $options[2]  = get_string('repeatdaily', 'chat');
+        // $options[3]  = get_string('repeatweekly', 'chat');
+        // $mform->addElement('select', 'schedule', get_string('repeattimes', 'chat'), $options);
 
         $options = array();
         $options[0]    = get_string('neverdeletemessages', 'chat');

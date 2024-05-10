@@ -125,7 +125,7 @@ function chat_add_instance($chat) {
     require_once($CFG->dirroot . '/course/lib.php');
 
     $chat->timemodified = time();
-    $chat->chattime = chat_calculate_next_chat_time($chat->schedule, $chat->chattime);
+    // $chat->chattime = chat_calculate_next_chat_time($chat->schedule, $chat->chattime);
 
     $returnid = $DB->insert_record("chat", $chat);
 
