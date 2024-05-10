@@ -409,68 +409,68 @@ class core_course_management_renderer extends plugin_renderer_base {
 
         $html  = html_writer::start_div('category-bulk-actions bulk-actions');
         $html .= html_writer::div(get_string('categorybulkaction'), 'accesshide', array('tabindex' => '0'));
-        if (core_course_category::can_resort_any()) {
-            $selectoptions = array(
-                'selectedcategories' => get_string('selectedcategories'),
-                'allcategories' => get_string('allcategories')
-            );
-            $form = html_writer::start_div();
-            if ($category) {
-                $selectoptions = array('thiscategory' => get_string('thiscategory')) + $selectoptions;
-                $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'currentcategoryid', 'value' => $category->id));
-            }
-            $form .= html_writer::div(
-                html_writer::select(
-                    $selectoptions,
-                    'selectsortby',
-                    'selectedcategories',
-                    false,
-                    array('aria-label' => get_string('selectcategorysort'))
-                )
-            );
-            $form .= html_writer::div(
-                html_writer::select(
-                    array(
-                        'name' => get_string('sortbyx', 'moodle', get_string('categoryname')),
-                        'namedesc' => get_string('sortbyxreverse', 'moodle', get_string('categoryname')),
-                        'idnumber' => get_string('sortbyx', 'moodle', get_string('idnumbercoursecategory')),
-                        'idnumberdesc' => get_string('sortbyxreverse' , 'moodle' , get_string('idnumbercoursecategory')),
-                        'none' => get_string('dontsortcategories')
-                    ),
-                    'resortcategoriesby',
-                    'name',
-                    false,
-                    array('aria-label' => get_string('selectcategorysortby'), 'class' => 'mt-1')
-                )
-            );
-            $form .= html_writer::div(
-                html_writer::select(
-                    array(
-                        'fullname' => get_string('sortbyx', 'moodle', get_string('fullnamecourse')),
-                        'fullnamedesc' => get_string('sortbyxreverse', 'moodle', get_string('fullnamecourse')),
-                        'shortname' => get_string('sortbyx', 'moodle', get_string('shortnamecourse')),
-                        'shortnamedesc' => get_string('sortbyxreverse', 'moodle', get_string('shortnamecourse')),
-                        'idnumber' => get_string('sortbyx', 'moodle', get_string('idnumbercourse')),
-                        'idnumberdesc' => get_string('sortbyxreverse', 'moodle', get_string('idnumbercourse')),
-                        'timecreated' => get_string('sortbyx', 'moodle', get_string('timecreatedcourse')),
-                        'timecreateddesc' => get_string('sortbyxreverse', 'moodle', get_string('timecreatedcourse')),
-                        'none' => get_string('dontsortcourses')
-                    ),
-                    'resortcoursesby',
-                    'fullname',
-                    false,
-                    array('aria-label' => get_string('selectcoursesortby'), 'class' => 'mt-1')
-                )
-            );
-            $form .= html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'bulksort',
-                'value' => get_string('sort'), 'class' => 'btn btn-secondary my-1'));
-            $form .= html_writer::end_div();
+        // if (core_course_category::can_resort_any()) {
+        //     $selectoptions = array(
+        //         'selectedcategories' => get_string('selectedcategories'),
+        //         'allcategories' => get_string('allcategories')
+        //     );
+        //     $form = html_writer::start_div();
+        //     if ($category) {
+        //         $selectoptions = array('thiscategory' => get_string('thiscategory')) + $selectoptions;
+        //         $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'currentcategoryid', 'value' => $category->id));
+        //     }
+        //     $form .= html_writer::div(
+        //         html_writer::select(
+        //             $selectoptions,
+        //             'selectsortby',
+        //             'selectedcategories',
+        //             false,
+        //             array('aria-label' => get_string('selectcategorysort'))
+        //         )
+        //     );
+        //     $form .= html_writer::div(
+        //         html_writer::select(
+        //             array(
+        //                 'name' => get_string('sortbyx', 'moodle', get_string('categoryname')),
+        //                 'namedesc' => get_string('sortbyxreverse', 'moodle', get_string('categoryname')),
+        //                 'idnumber' => get_string('sortbyx', 'moodle', get_string('idnumbercoursecategory')),
+        //                 'idnumberdesc' => get_string('sortbyxreverse' , 'moodle' , get_string('idnumbercoursecategory')),
+        //                 'none' => get_string('dontsortcategories')
+        //             ),
+        //             'resortcategoriesby',
+        //             'name',
+        //             false,
+        //             array('aria-label' => get_string('selectcategorysortby'), 'class' => 'mt-1')
+        //         )
+        //     );
+        //     $form .= html_writer::div(
+        //         html_writer::select(
+        //             array(
+        //                 'fullname' => get_string('sortbyx', 'moodle', get_string('fullnamecourse')),
+        //                 'fullnamedesc' => get_string('sortbyxreverse', 'moodle', get_string('fullnamecourse')),
+        //                 'shortname' => get_string('sortbyx', 'moodle', get_string('shortnamecourse')),
+        //                 'shortnamedesc' => get_string('sortbyxreverse', 'moodle', get_string('shortnamecourse')),
+        //                 'idnumber' => get_string('sortbyx', 'moodle', get_string('idnumbercourse')),
+        //                 'idnumberdesc' => get_string('sortbyxreverse', 'moodle', get_string('idnumbercourse')),
+        //                 'timecreated' => get_string('sortbyx', 'moodle', get_string('timecreatedcourse')),
+        //                 'timecreateddesc' => get_string('sortbyxreverse', 'moodle', get_string('timecreatedcourse')),
+        //                 'none' => get_string('dontsortcourses')
+        //             ),
+        //             'resortcoursesby',
+        //             'fullname',
+        //             false,
+        //             array('aria-label' => get_string('selectcoursesortby'), 'class' => 'mt-1')
+        //         )
+        //     );
+        //     $form .= html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'bulksort',
+        //         'value' => get_string('sort'), 'class' => 'btn btn-secondary my-1'));
+        //     $form .= html_writer::end_div();
 
-            $html .= html_writer::start_div('detail-pair row yui3-g my-1');
-            $html .= html_writer::div(html_writer::span(get_string('sorting')), 'pair-key col-md-3 yui3-u-1-4');
-            $html .= html_writer::div($form, 'pair-value col-md-9 yui3-u-3-4');
-            $html .= html_writer::end_div();
-        }
+        //     $html .= html_writer::start_div('detail-pair row yui3-g my-1');
+        //     $html .= html_writer::div(html_writer::span(get_string('sorting')), 'pair-key col-md-3 yui3-u-1-4');
+        //     $html .= html_writer::div($form, 'pair-value col-md-9 yui3-u-3-4');
+        //     $html .= html_writer::end_div();
+        // }
         if (core_course_category::can_change_parent_any()) {
             $options = array();
             if (core_course_category::top()->has_manage_capability()) {
