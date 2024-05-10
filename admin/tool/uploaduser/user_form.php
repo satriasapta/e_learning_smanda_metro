@@ -48,19 +48,19 @@ class admin_uploaduser_form1 extends moodleform {
         $mform->addElement('filepicker', 'userfile', get_string('file'));
         $mform->addRule('userfile', null, 'required');
 
-        $choices = csv_import_reader::get_delimiter_list();
-        $mform->addElement('select', 'delimiter_name', get_string('csvdelimiter', 'tool_uploaduser'), $choices);
-        if (array_key_exists('cfg', $choices)) {
-            $mform->setDefault('delimiter_name', 'cfg');
-        } else if (get_string('listsep', 'langconfig') == ';') {
-            $mform->setDefault('delimiter_name', 'semicolon');
-        } else {
-            $mform->setDefault('delimiter_name', 'comma');
-        }
+        // $choices = csv_import_reader::get_delimiter_list();
+        // $mform->addElement('select', 'delimiter_name', get_string('csvdelimiter', 'tool_uploaduser'), $choices);
+        // if (array_key_exists('cfg', $choices)) {
+        //     $mform->setDefault('delimiter_name', 'cfg');
+        // } else if (get_string('listsep', 'langconfig') == ';') {
+        //     $mform->setDefault('delimiter_name', 'semicolon');
+        // } else {
+        //     $mform->setDefault('delimiter_name', 'comma');
+        // }
 
-        $choices = core_text::get_encodings();
-        $mform->addElement('select', 'encoding', get_string('encoding', 'tool_uploaduser'), $choices);
-        $mform->setDefault('encoding', 'UTF-8');
+        // $choices = core_text::get_encodings();
+        // $mform->addElement('select', 'encoding', get_string('encoding', 'tool_uploaduser'), $choices);
+        // $mform->setDefault('encoding', 'UTF-8');
 
         $choices = array('10'=>10, '20'=>20, '100'=>100, '1000'=>1000, '100000'=>100000);
         $mform->addElement('select', 'previewrows', get_string('rowpreviewnum', 'tool_uploaduser'), $choices);
