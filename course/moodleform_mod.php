@@ -1022,17 +1022,17 @@ abstract class moodleform_mod extends moodleform
         $mform->hideIf('assesstimefinish', $assessedfieldname, 'eq', 0);
         $mform->hideIf('assesstimefinish', 'ratingtime');
 
-        if ($this->_features->gradecat) {
-            $mform->addElement(
-                'select',
-                $gradecatfieldname,
-                get_string('gradecategoryonmodform', 'grades'),
-                grade_get_categories_menu($COURSE->id, $this->_outcomesused)
-            );
-            $mform->addHelpButton($gradecatfieldname, 'gradecategoryonmodform', 'grades');
-            $mform->hideIf($gradecatfieldname, $assessedfieldname, 'eq', 0);
-            $mform->hideIf($gradecatfieldname, "{$scalefieldname}[modgrade_type]", 'eq', 'none');
-        }
+        // if ($this->_features->gradecat) {
+        //     $mform->addElement(
+        //         'select',
+        //         $gradecatfieldname,
+        //         get_string('gradecategoryonmodform', 'grades'),
+        //         grade_get_categories_menu($COURSE->id, $this->_outcomesused)
+        //     );
+        //     $mform->addHelpButton($gradecatfieldname, 'gradecategoryonmodform', 'grades');
+        //     $mform->hideIf($gradecatfieldname, $assessedfieldname, 'eq', 0);
+        //     $mform->hideIf($gradecatfieldname, "{$scalefieldname}[modgrade_type]", 'eq', 'none');
+        // }
 
         // Grade to pass.
         $mform->addElement('float', $gradepassfieldname, get_string('gradepass', 'grades'));
@@ -1226,16 +1226,16 @@ abstract class moodleform_mod extends moodleform
                 }
             }
 
-            if ($this->_features->gradecat) {
-                $mform->addElement(
-                    'select',
-                    $gradecatfieldname,
-                    get_string('gradecategoryonmodform', 'grades'),
-                    grade_get_categories_menu($COURSE->id, $this->_outcomesused)
-                );
-                $mform->addHelpButton($gradecatfieldname, 'gradecategoryonmodform', 'grades');
-                $mform->hideIf($gradecatfieldname, "{$gradefieldname}[modgrade_type]", 'eq', 'none');
-            }
+            // if ($this->_features->gradecat) {
+            //     $mform->addElement(
+            //         'select',
+            //         $gradecatfieldname,
+            //         get_string('gradecategoryonmodform', 'grades'),
+            //         grade_get_categories_menu($COURSE->id, $this->_outcomesused)
+            //     );
+            //     $mform->addHelpButton($gradecatfieldname, 'gradecategoryonmodform', 'grades');
+            //     $mform->hideIf($gradecatfieldname, "{$gradefieldname}[modgrade_type]", 'eq', 'none');
+            // }
 
             // Grade to pass.
             $mform->addElement('float', $gradepassfieldname, get_string($gradepassfieldname, 'grades'));
