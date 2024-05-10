@@ -458,8 +458,8 @@ class grading_manager {
             $areatitle = reset($areas);
             $areaname  = key($areas);
             $this->set_area($areaname);
-            $managementnode = $modulenode->add(get_string('gradingmanagement', 'core_grading'),
-                $this->get_management_url(), settings_navigation::TYPE_CUSTOM, null, 'advgrading');
+            // $managementnode = $modulenode->add(get_string('gradingmanagement', 'core_grading'),
+            //     $this->get_management_url(), settings_navigation::TYPE_CUSTOM, null, 'advgrading');
         }
     }
 

@@ -5589,10 +5589,10 @@ function forum_extend_settings_navigation(settings_navigation $settingsnav, navi
         }
     }
 
-    if (has_capability('mod/forum:viewsubscribers', $settingsnav->get_page()->context)) {
-        $url = new moodle_url('/mod/forum/subscribers.php', ['id' => $forumobject->id, 'edit' => 'off']);
-        $forumnode->add(get_string('subscriptions', 'forum'), $url, navigation_node::TYPE_SETTING, null, 'forumsubscriptions');
-    }
+    // if (has_capability('mod/forum:viewsubscribers', $settingsnav->get_page()->context)) {
+    //     $url = new moodle_url('/mod/forum/subscribers.php', ['id' => $forumobject->id, 'edit' => 'off']);
+    //     $forumnode->add(get_string('subscriptions', 'forum'), $url, navigation_node::TYPE_SETTING, null, 'forumsubscriptions');
+    // }
 
     // Display all forum reports user has access to.
     if (isloggedin() && !isguestuser()) {
