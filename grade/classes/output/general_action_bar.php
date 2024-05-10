@@ -28,7 +28,8 @@ use core\output\select_menu;
  * @copyright  2021 Mihail Geshoski <mihail@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class general_action_bar extends action_bar {
+class general_action_bar extends action_bar
+{
 
     /** @var moodle_url $activeurl The URL that should be set as active in the URL selector element. */
     protected $activeurl;
@@ -52,7 +53,8 @@ class general_action_bar extends action_bar {
      *                           outcomes, letters).
      * @param string $activeplugin The plugin of the current gradebook page (grader, fullview, ...).
      */
-    public function __construct(\context $context, moodle_url $activeurl, string $activetype, string $activeplugin) {
+    public function __construct(\context $context, moodle_url $activeurl, string $activetype, string $activeplugin)
+    {
         parent::__construct($context);
         $this->activeurl = $activeurl;
         $this->activetype = $activetype;
@@ -65,7 +67,8 @@ class general_action_bar extends action_bar {
      * @param \renderer_base $output renderer to be used to render the action bar elements.
      * @return array
      */
-    public function export_for_template(\renderer_base $output): array {
+    public function export_for_template(\renderer_base $output): array
+    {
         $selectmenu = $this->get_action_selector();
 
         if (is_null($selectmenu)) {
@@ -82,7 +85,8 @@ class general_action_bar extends action_bar {
      *
      * @return string
      */
-    public function get_template(): string {
+    public function get_template(): string
+    {
         return 'core_grades/general_action_bar';
     }
 
@@ -91,7 +95,8 @@ class general_action_bar extends action_bar {
      *
      * @return \select_menu|null The URL select object.
      */
-    private function get_action_selector(): ?select_menu {
+    private function get_action_selector(): ?select_menu
+    {
         if ($this->context->contextlevel !== CONTEXT_COURSE) {
             return null;
         }
