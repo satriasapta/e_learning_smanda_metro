@@ -76,30 +76,30 @@ class question_import_form extends moodleform {
         $mform->addRule("formatchoices", null, 'required', null, 'client');
 
         // Import options.
-        $mform->addElement('header', 'general', get_string('general', 'form'));
+        // $mform->addElement('header', 'general', get_string('general', 'form'));
 
-        $mform->addElement('questioncategory', 'category', get_string('importcategory', 'question'), compact('contexts'));
-        $mform->setDefault('category', $defaultcategory);
-        $mform->addHelpButton('category', 'importcategory', 'question');
+        // $mform->addElement('questioncategory', 'category', get_string('importcategory', 'question'), compact('contexts'));
+        // $mform->setDefault('category', $defaultcategory);
+        // $mform->addHelpButton('category', 'importcategory', 'question');
 
-        $categorygroup = [];
-        $categorygroup[] = $mform->createElement('checkbox', 'catfromfile', '', get_string('getcategoryfromfile', 'question'));
-        $categorygroup[] = $mform->createElement('checkbox', 'contextfromfile', '', get_string('getcontextfromfile', 'question'));
-        $mform->addGroup($categorygroup, 'categorygroup', '', '', false);
-        $mform->disabledIf('categorygroup', 'catfromfile', 'notchecked');
-        $mform->setDefault('catfromfile', 1);
-        $mform->setDefault('contextfromfile', 1);
+        // $categorygroup = [];
+        // $categorygroup[] = $mform->createElement('checkbox', 'catfromfile', '', get_string('getcategoryfromfile', 'question'));
+        // $categorygroup[] = $mform->createElement('checkbox', 'contextfromfile', '', get_string('getcontextfromfile', 'question'));
+        // $mform->addGroup($categorygroup, 'categorygroup', '', '', false);
+        // $mform->disabledIf('categorygroup', 'catfromfile', 'notchecked');
+        // $mform->setDefault('catfromfile', 1);
+        // $mform->setDefault('contextfromfile', 1);
 
-        $matchgrades = [];
-        $matchgrades['error'] = get_string('matchgradeserror', 'question');
-        $matchgrades['nearest'] = get_string('matchgradesnearest', 'question');
-        $mform->addElement('select', 'matchgrades', get_string('matchgrades', 'question'), $matchgrades);
-        $mform->addHelpButton('matchgrades', 'matchgrades', 'question');
-        $mform->setDefault('matchgrades', 'error');
+        // $matchgrades = [];
+        // $matchgrades['error'] = get_string('matchgradeserror', 'question');
+        // $matchgrades['nearest'] = get_string('matchgradesnearest', 'question');
+        // $mform->addElement('select', 'matchgrades', get_string('matchgrades', 'question'), $matchgrades);
+        // $mform->addHelpButton('matchgrades', 'matchgrades', 'question');
+        // $mform->setDefault('matchgrades', 'error');
 
-        $mform->addElement('selectyesno', 'stoponerror', get_string('stoponerror', 'question'));
-        $mform->setDefault('stoponerror', 1);
-        $mform->addHelpButton('stoponerror', 'stoponerror', 'question');
+        // $mform->addElement('selectyesno', 'stoponerror', get_string('stoponerror', 'question'));
+        // $mform->setDefault('stoponerror', 1);
+        // $mform->addHelpButton('stoponerror', 'stoponerror', 'question');
 
         // The file to import.
         $mform->addElement('header', 'importfileupload', get_string('importquestions', 'question'));
