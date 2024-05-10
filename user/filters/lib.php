@@ -65,11 +65,7 @@ class user_filtering {
 
         if (empty($fieldnames)) {
             // As a start, add all fields as advanced fields (which are only available after clicking on "Show more").
-            $fieldnames = array('realname' => 1, 'lastname' => 1, 'firstname' => 1, 'username' => 1, 'email' => 1, 'city' => 1,
-                                'country' => 1, 'confirmed' => 1, 'suspended' => 1, 'profile' => 1, 'courserole' => 1,
-                                'anycourses' => 1, 'systemrole' => 1, 'cohort' => 1, 'firstaccess' => 1, 'lastaccess' => 1,
-                                'neveraccessed' => 1, 'timecreated' => 1, 'timemodified' => 1, 'nevermodified' => 1, 'auth' => 1,
-                                'mnethostid' => 1, 'idnumber' => 1, 'institution' => 1, 'department' => 1, 'lastip' => 1);
+            $fieldnames = array('realname' => 1);
 
             // Get the config which filters the admin wanted to show by default.
             $userfiltersdefault = get_config('core', 'userfiltersdefault');
