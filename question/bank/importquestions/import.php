@@ -148,7 +148,9 @@ if ($form = $importform->get_data()) {
 }
 
 echo $OUTPUT->heading_with_help($txt->importquestions, 'importquestions', 'question');
-echo '<a href="https://docs-moodle-org.translate.goog/404/en/Aiken_format?_x_tr_sl=en&_x_tr_tl=id&_x_tr_hl=id&_x_tr_pto=tc#Importing"> Panduan penggunaan AIKEN FORMAT </a>';
+
+echo '<a href="https://docs-moodle-org.translate.goog/404/en/Aiken_format?_x_tr_sl=en&_x_tr_tl=id&_x_tr_hl=id&_x_tr_pto=tc#Importing" target="_blank"> Panduan penggunaan AIKEN FORMAT </a>';
+
 
 // Print upload form.
 $importform->display();
