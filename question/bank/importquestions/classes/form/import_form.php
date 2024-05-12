@@ -90,16 +90,16 @@ class question_import_form extends moodleform {
         // $mform->setDefault('catfromfile', 1);
         // $mform->setDefault('contextfromfile', 1);
 
-        // $matchgrades = [];
-        // $matchgrades['error'] = get_string('matchgradeserror', 'question');
-        // $matchgrades['nearest'] = get_string('matchgradesnearest', 'question');
-        // $mform->addElement('select', 'matchgrades', get_string('matchgrades', 'question'), $matchgrades);
-        // $mform->addHelpButton('matchgrades', 'matchgrades', 'question');
-        // $mform->setDefault('matchgrades', 'error');
+        $matchgrades = [];
+        $matchgrades['error'] = get_string('matchgradeserror', 'question');
+        $matchgrades['nearest'] = get_string('matchgradesnearest', 'question');
+        $mform->addElement('select', 'matchgrades', get_string('matchgrades', 'question'), $matchgrades);
+        $mform->addHelpButton('matchgrades', 'matchgrades', 'question');
+        $mform->setDefault('matchgrades', 'error');
 
-        // $mform->addElement('selectyesno', 'stoponerror', get_string('stoponerror', 'question'));
-        // $mform->setDefault('stoponerror', 1);
-        // $mform->addHelpButton('stoponerror', 'stoponerror', 'question');
+        $mform->addElement('selectyesno', 'stoponerror', get_string('stoponerror', 'question'));
+        $mform->setDefault('stoponerror', 1);
+        $mform->addHelpButton('stoponerror', 'stoponerror', 'question');
 
         // The file to import.
         $mform->addElement('header', 'importfileupload', get_string('importquestions', 'question'));
