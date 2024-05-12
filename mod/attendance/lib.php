@@ -588,14 +588,14 @@ function attendance_extend_settings_navigation(settings_navigation $settingsnav,
         $nodes[] = ['url' => new moodle_url('/mod/attendance/report.php', ['id' => $cm->id]),
                     'title' => get_string('report', 'attendance')];
     }
-    if (has_capability('mod/attendance:import', $context)) {
-        $nodes[] = ['url' => new moodle_url('/mod/attendance/import.php', ['id' => $cm->id]),
-                    'title' => get_string('import', 'attendance')];
-    }
-    if (has_capability('mod/attendance:export', $context)) {
-        $nodes[] = ['url' => new moodle_url('/mod/attendance/export.php', ['id' => $cm->id]),
-                    'title' => get_string('export', 'attendance')];
-    }
+    // if (has_capability('mod/attendance:import', $context)) {
+    //     $nodes[] = ['url' => new moodle_url('/mod/attendance/import.php', ['id' => $cm->id]),
+    //                 'title' => get_string('import', 'attendance')];
+    // }
+    // if (has_capability('mod/attendance:export', $context)) {
+    //     $nodes[] = ['url' => new moodle_url('/mod/attendance/export.php', ['id' => $cm->id]),
+    //                 'title' => get_string('export', 'attendance')];
+    // }
 
     if (has_capability('mod/attendance:viewreports', $context) && get_config('attendance', 'enablewarnings')) {
         $nodes[] = ['url' => new moodle_url('/mod/attendance/absentee.php', ['id' => $cm->id]),
@@ -610,11 +610,11 @@ function attendance_extend_settings_navigation(settings_navigation $settingsnav,
         }
     }
 
-    if (has_capability('mod/attendance:managetemporaryusers', context_module::instance($cm->id))) {
-        $nodes[] = ['url' => new moodle_url('/mod/attendance/tempusers.php', ['id' => $cm->id]),
-        'title' => get_string('tempusers', 'attendance'),
-        'more' => true];
-    }
+    // if (has_capability('mod/attendance:managetemporaryusers', context_module::instance($cm->id))) {
+    //     $nodes[] = ['url' => new moodle_url('/mod/attendance/tempusers.php', ['id' => $cm->id]),
+    //     'title' => get_string('tempusers', 'attendance'),
+    //     'more' => true];
+    // }
 
     foreach ($nodes as $node) {
         $settingsnode = navigation_node::create($node['title'],
