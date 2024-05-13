@@ -1665,25 +1665,25 @@ class assign {
      *                               This form is modified directly (not returned).
      * @return void
      */
-    // public function add_all_plugin_settings(MoodleQuickForm $mform) {
-    //     $mform->addElement('header', 'submissiontypes', get_string('submissiontypes', 'assign'));
+    public function add_all_plugin_settings(MoodleQuickForm $mform) {
+        $mform->addElement('header', 'submissiontypes', get_string('submissiontypes', 'assign'));
 
-    //     $submissionpluginsenabled = array();
-    //     $group = $mform->addGroup(array(), 'submissionplugins', get_string('submissiontypes', 'assign'), array(' '), false);
-    //     foreach ($this->submissionplugins as $plugin) {
-    //         $this->add_plugin_settings($plugin, $mform, $submissionpluginsenabled);
-    //     }
-    //     $group->setElements($submissionpluginsenabled);
+        $submissionpluginsenabled = array();
+        $group = $mform->addGroup(array(), 'submissionplugins', get_string('submissiontypes', 'assign'), array(' '), false);
+        foreach ($this->submissionplugins as $plugin) {
+            $this->add_plugin_settings($plugin, $mform, $submissionpluginsenabled);
+        }
+        $group->setElements($submissionpluginsenabled);
 
-    //     $mform->addElement('header', 'feedbacktypes', get_string('feedbacktypes', 'assign'));
-    //     $feedbackpluginsenabled = array();
-    //     $group = $mform->addGroup(array(), 'feedbackplugins', get_string('feedbacktypes', 'assign'), array(' '), false);
-    //     foreach ($this->feedbackplugins as $plugin) {
-    //         $this->add_plugin_settings($plugin, $mform, $feedbackpluginsenabled);
-    //     }
-    //     $group->setElements($feedbackpluginsenabled);
-    //     $mform->setExpanded('submissiontypes');
-    // }
+        $mform->addElement('header', 'feedbacktypes', get_string('feedbacktypes', 'assign'));
+        $feedbackpluginsenabled = array();
+        $group = $mform->addGroup(array(), 'feedbackplugins', get_string('feedbacktypes', 'assign'), array(' '), false);
+        foreach ($this->feedbackplugins as $plugin) {
+            $this->add_plugin_settings($plugin, $mform, $feedbackpluginsenabled);
+        }
+        $group->setElements($feedbackpluginsenabled);
+        $mform->setExpanded('submissiontypes');
+    }
 
     /**
      * Allow each plugin an opportunity to update the defaultvalues
