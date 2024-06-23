@@ -37,7 +37,8 @@ defined('MOODLE_INTERNAL') || die();
  * @throws dml_exception
  * @throws moodle_exception
  */
-function tool_dataprivacy_myprofile_navigation(tree $tree, $user, $iscurrentuser, $course) {
+function tool_dataprivacy_myprofile_navigation(tree $tree, $user, $iscurrentuser, $course)
+{
     global $PAGE, $USER;
 
     // Get the Privacy and policies category.
@@ -62,8 +63,13 @@ function tool_dataprivacy_myprofile_navigation(tree $tree, $user, $iscurrentuser
         $PAGE->requires->js_call_amd('tool_dataprivacy/contactdpo', 'init');
 
         $url = new moodle_url('/admin/tool/dataprivacy/mydatarequests.php');
-        $node = new core_user\output\myprofile\node('privacyandpolicies', 'datarequests',
-            get_string('datarequests', 'tool_dataprivacy'), null, $url);
+        $node = new core_user\output\myprofile\node(
+            'privacyandpolicies',
+            'datarequests',
+            get_string('datarequests', 'tool_dataprivacy'),
+            null,
+            $url
+        );
         $category->add_node($node);
 
         // Check if the user has an ongoing data export request.
@@ -73,8 +79,13 @@ function tool_dataprivacy_myprofile_navigation(tree $tree, $user, $iscurrentuser
         if (!$hasexportrequest && \tool_dataprivacy\api::can_create_data_download_request_for_self()) {
             $exportparams = ['type' => \tool_dataprivacy\api::DATAREQUEST_TYPE_EXPORT];
             $exporturl = new moodle_url('/admin/tool/dataprivacy/createdatarequest.php', $exportparams);
-            $exportnode = new core_user\output\myprofile\node('privacyandpolicies', 'requestdataexport',
-                get_string('requesttypeexport', 'tool_dataprivacy'), null, $exporturl);
+            $exportnode = new core_user\output\myprofile\node(
+                'privacyandpolicies',
+                'requestdataexport',
+                get_string('requesttypeexport', 'tool_dataprivacy'),
+                null,
+                $exporturl
+            );
             $category->add_node($exportnode);
         }
 
@@ -85,8 +96,13 @@ function tool_dataprivacy_myprofile_navigation(tree $tree, $user, $iscurrentuser
         if (!$hasdeleterequest && \tool_dataprivacy\api::can_create_data_deletion_request_for_self()) {
             $deleteparams = ['type' => \tool_dataprivacy\api::DATAREQUEST_TYPE_DELETE];
             $deleteurl = new moodle_url('/admin/tool/dataprivacy/createdatarequest.php', $deleteparams);
-            $deletenode = new core_user\output\myprofile\node('privacyandpolicies', 'requestdatadeletion',
-                get_string('deletemyaccount', 'tool_dataprivacy'), null, $deleteurl);
+            $deletenode = new core_user\output\myprofile\node(
+                'privacyandpolicies',
+                'requestdatadeletion',
+                get_string('deletemyaccount', 'tool_dataprivacy'),
+                null,
+                $deleteurl
+            );
             $category->add_node($deletenode);
         }
     }
@@ -99,9 +115,14 @@ function tool_dataprivacy_myprofile_navigation(tree $tree, $user, $iscurrentuser
     }
 
     if ($showsummary && $iscurrentuser) {
-        $summaryurl = new moodle_url('/admin/tool/dataprivacy/summary.php');
-        $summarynode = new core_user\output\myprofile\node('privacyandpolicies', 'retentionsummary',
-            get_string('dataretentionsummary', 'tool_dataprivacy'), null, $summaryurl);
+        $summaryurl = new moodle_url('https://drive.google.com/file/d/17-lRmML6D40cSYBHVKkPpRYuQIZxyPf6/view?usp=sharing');
+        $summarynode = new core_user\output\myprofile\node(
+            'privacyandpolicies',
+            'retentionsummary',
+            get_string('dataretentionsummary', 'tool_dataprivacy'),
+            null,
+            $summaryurl
+        );
         $category->add_node($summarynode);
     }
 
@@ -122,7 +143,8 @@ function tool_dataprivacy_myprofile_navigation(tree $tree, $user, $iscurrentuser
  *
  * @return string HTML footer content
  */
-function tool_dataprivacy_standard_footer_html() {
+function tool_dataprivacy_standard_footer_html()
+{
     $output = '';
 
     // A returned 0 means that the setting was set and disabled, false means that there is no value for the provided setting.
@@ -133,7 +155,7 @@ function tool_dataprivacy_standard_footer_html() {
     }
 
     if ($showsummary) {
-        $url = new moodle_url('/admin/tool/dataprivacy/summary.php');
+        $url = new moodle_url('https://drive.google.com/file/d/17-lRmML6D40cSYBHVKkPpRYuQIZxyPf6/view?usp=sharing');
         $output = html_writer::link($url, get_string('dataretentionsummary', 'tool_dataprivacy'));
         $output = html_writer::div($output, 'tool_dataprivacy');
     }
@@ -146,7 +168,8 @@ function tool_dataprivacy_standard_footer_html() {
  * @param array $args The fragment arguments.
  * @return string The rendered mform fragment.
  */
-function tool_dataprivacy_output_fragment_addpurpose_form($args) {
+function tool_dataprivacy_output_fragment_addpurpose_form($args)
+{
 
     $formdata = [];
     if (!empty($args['jsonformdata'])) {
@@ -155,8 +178,15 @@ function tool_dataprivacy_output_fragment_addpurpose_form($args) {
     }
 
     $persistent = new \tool_dataprivacy\purpose();
-    $mform = new \tool_dataprivacy\form\purpose(null, ['persistent' => $persistent],
-        'post', '', null, true, $formdata);
+    $mform = new \tool_dataprivacy\form\purpose(
+        null,
+        ['persistent' => $persistent],
+        'post',
+        '',
+        null,
+        true,
+        $formdata
+    );
 
     if (!empty($args['jsonformdata'])) {
         // Show errors if data was received.
@@ -172,7 +202,8 @@ function tool_dataprivacy_output_fragment_addpurpose_form($args) {
  * @param array $args The fragment arguments.
  * @return string The rendered mform fragment.
  */
-function tool_dataprivacy_output_fragment_addcategory_form($args) {
+function tool_dataprivacy_output_fragment_addcategory_form($args)
+{
 
     $formdata = [];
     if (!empty($args['jsonformdata'])) {
@@ -181,8 +212,15 @@ function tool_dataprivacy_output_fragment_addcategory_form($args) {
     }
 
     $persistent = new \tool_dataprivacy\category();
-    $mform = new \tool_dataprivacy\form\category(null, ['persistent' => $persistent],
-        'post', '', null, true, $formdata);
+    $mform = new \tool_dataprivacy\form\category(
+        null,
+        ['persistent' => $persistent],
+        'post',
+        '',
+        null,
+        true,
+        $formdata
+    );
 
     if (!empty($args['jsonformdata'])) {
         // Show errors if data was received.
@@ -198,7 +236,8 @@ function tool_dataprivacy_output_fragment_addcategory_form($args) {
  * @param array $args The fragment arguments.
  * @return string The rendered mform fragment.
  */
-function tool_dataprivacy_output_fragment_context_form($args) {
+function tool_dataprivacy_output_fragment_context_form($args)
+{
     global $PAGE;
 
     $contextid = $args[0];
@@ -207,8 +246,11 @@ function tool_dataprivacy_output_fragment_context_form($args) {
     $customdata = \tool_dataprivacy\form\context_instance::get_context_instance_customdata($context);
 
     if (!empty($customdata['purposeretentionperiods'])) {
-        $PAGE->requires->js_call_amd('tool_dataprivacy/effective_retention_period', 'init',
-            [$customdata['purposeretentionperiods']]);
+        $PAGE->requires->js_call_amd(
+            'tool_dataprivacy/effective_retention_period',
+            'init',
+            [$customdata['purposeretentionperiods']]
+        );
     }
     $mform = new \tool_dataprivacy\form\context_instance(null, $customdata);
     return $mform->render();
@@ -220,15 +262,19 @@ function tool_dataprivacy_output_fragment_context_form($args) {
  * @param array $args The fragment arguments.
  * @return string The rendered mform fragment.
  */
-function tool_dataprivacy_output_fragment_contextlevel_form($args) {
+function tool_dataprivacy_output_fragment_contextlevel_form($args)
+{
     global $PAGE;
 
     $contextlevel = $args[0];
     $customdata = \tool_dataprivacy\form\contextlevel::get_contextlevel_customdata($contextlevel);
 
     if (!empty($customdata['purposeretentionperiods'])) {
-        $PAGE->requires->js_call_amd('tool_dataprivacy/effective_retention_period', 'init',
-            [$customdata['purposeretentionperiods']]);
+        $PAGE->requires->js_call_amd(
+            'tool_dataprivacy/effective_retention_period',
+            'init',
+            [$customdata['purposeretentionperiods']]
+        );
     }
 
     $mform = new \tool_dataprivacy\form\contextlevel(null, $customdata);
@@ -247,7 +293,8 @@ function tool_dataprivacy_output_fragment_contextlevel_form($args) {
  * @param array $options More options
  * @return bool Returns false if we don't find a file.
  */
-function tool_dataprivacy_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+function tool_dataprivacy_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array())
+{
     if ($context->contextlevel == CONTEXT_USER) {
         // Make sure the user is logged in.
         require_login(null, false);
